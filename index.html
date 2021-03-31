@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>Calculation</title>
+    <script src="js/jquery.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <div class="row col-12">
+            <div class="col-4 text-center" style="border-right:1px black solid">
+                <div class="form-group col row" style="margin-top:50px">
+
+                    <div class="col-12 ">
+                        <h4>Sample</h4>
+                    </div>
+                    <div class="form-group col">
+                        <input type="number" id="sample" class="form-control">
+                    </div>
+                    <div class="form-group col">
+                        <select id="sampleselect" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 offset-2" id="input-buttons" style="margin-top:50px">
+
+                <button type="button" id="fileinput-btn" class="btn btn-primary">Input Files</button>
+                <button type="button" id="manualinput-btn" class="btn btn-secondary">Manual Input</button>
+
+            </div>
+
+            <div class="col-8 row text-center" style="display:none" id="fileinput-tab">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="input">Input</label>
+                        <input type="file" id="fileinput" class="form-control" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="background">Background</label>
+                        <input type="file" id="backgroundfile" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 row text-center" style="display:none" id="manualinput-tab">
+                <div class="col row">
+                    <div class="col-12 ">
+                        <h4>Region A</h4>
+                    </div>
+                    <div class="form-group col">
+                        <label for="AtSIE">tSIE</label>
+                        <input type="number" id="AtSIE" class="form-control">
+                    </div>
+                    <div class="form-group col">
+                        <label for="ACPS">CPS</label>
+                        <input type="number" id="ACPS" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col row">
+                    <div class="col-12">
+                        <h4>Region B</h4>
+                    </div>
+                    <div class="form-group col">
+                        <label for="BtSIE">tSIE</label>
+                        <input type="number" id="BtSIE" class="form-control">
+                    </div>
+                    <div class="form-group col">
+                        <label for="BCPS">CPS</label>
+                        <input type="number" id="BCPS" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col row">
+                    <div class="col-12">
+                        <h4>Region C</h4>
+                    </div>
+                    <div class="form-group col">
+                        <label for="CtSIE">tSIE</label>
+                        <input type="number" id="CtSIE" class="form-control">
+                    </div>
+                    <div class="form-group col">
+                        <label for="CCPS">CPS</label>
+                        <input type="number" id="CCPS" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-12 row">
+                    <div class="col-12">
+                        <h4>Background</h4>
+                    </div>
+                    <div class="form-group col">
+                        <label for="backtSIE">tSIE</label>
+                        <input type="number" id="backtSIE" class="form-control">
+                    </div>
+                    <div class="form-group col">
+                        <label for="backCPS">CPS</label>
+                        <input type="number" id="backCPS" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row col-4 offset-4" id="calculate-buttons" style="display:none">
+                <div class="row col-12">
+                    <div class="col">
+                        <button type="button" id="calculate" class="btn btn-success">Calculate</button>
+                    </div>
+                    <div class="col">
+                        <input type="reset" value="Reset" class="btn btn-danger">
+                    </div>
+                </div>
+                <div class="col-12 form-group">
+                    <label for="result">Result:</label>
+                    <input type="text" readonly id="result" class="form-control">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+            var inputtype = null;
+            $('#manualinput-btn').on('click', function () {
+                inputtype = 'manual';
+                $('#input-buttons').hide();
+                $('#manualinput-tab').show();
+                $('#calculate-buttons').show();
+            })
+
+            $('#fileinput-btn').on('click', function () {
+                inputtype = 'file';
+                $('#input-buttons').hide();
+                $('#fileinput-tab').show();
+                $('#calculate-buttons').show();
+            })
+
+            $('#calculate').on('click', async function () {
+                var sample = parseInt($('#sample').val());
+                var result = null;
+
+                if (inputtype === 'manual') {
+
+                } else if (inputtype === 'file') {
+
+                    var files = $('#fileinput').prop('files');
+                    var background = $('#backgroundfile').prop('files');
+                    console.log(files,background);
+                    if (files.length === 0) {
+                        alert('Empty File Input');
+                        return false;
+                    }
+                    if (background.length === 0) {
+                        alert('Empty Background Input');
+                        return false;
+                    }
+
+                    var filepromises = Array.from(files).map(data => {
+                        return new Promise((resolve, reject) => {
+                            let reader = new FileReader();
+                            reader.onload = function () {
+                                resolve(reader.result);
+                            };
+                            reader.onerror = function () {
+                                reject(reader.error);
+                            };
+                            reader.readAsText(data);
+                        })
+                    });
+
+
+                    var backgroundpromise = new Promise((resolve, reject) => {
+                        let reader = new FileReader();
+                        reader.onload = function () {
+                            resolve(reader.result);
+                        };
+                        reader.onerror = function () {
+                            reject(reader.error);
+                        };
+                        reader.readAsText(background[0]);
+                    })
+
+                    var filedata = await Promise.all(filepromises).catch(err => {
+                        alert(err);
+                        throw err;
+                    });
+
+                    var backgrounddata = await backgroundpromise.catch(err => {
+                        alert(err);
+                        throw err;
+                    });
+
+                    result = 123;
+                    
+                console.log(filedata);
+                console.log(backgrounddata);
+
+                } else {
+                    alert('Wat?');
+                }
+
+                var number = parseInt($('#numberinput').val());
+
+
+
+
+
+                $('#result').val(result);
+
+            })
+        })
+    </script>
+</body>
+
+</html>
