@@ -20,7 +20,7 @@
     </div> -->
     <div class="row col-12">
         <div class="col-10">
-            dfgdfgdfgdfg
+            <b>Liquid Scintillation Activity Calculator</b> 
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -33,7 +33,7 @@
             <div class="col-4 text-center" style="border-right:1px black solid">
                 <div class="form-group col row" style="margin-top:50px">
                     <div class="col-12 ">
-                        <h4 data-translate="Sample">Sample</h4>
+                        <h4 data-translate="Sample quantity">Sample quantity</h4>
                     </div>
                     <div class="form-group col">
                         <input type="number" id="sample" class="form-control" required>
@@ -49,8 +49,8 @@
 
             <div class="col-6 offset-2" id="input-buttons" style="margin-top:50px">
 
-                <button type="button" id="fileinput-btn" class="btn btn-primary">Input Files</button>
-                <button type="button" id="manualinput-btn" class="btn btn-secondary">Manual Input</button>
+                <button type="button" id="fileinput-btn" class="btn btn-primary" data-translate="Input files...">Input files...</button>
+                <button type="button" id="manualinput-btn" class="btn btn-secondary" data-translate="Manual input">Manual input</button>
 
             </div>
 
@@ -70,43 +70,43 @@
             <div class="col-8 row text-center" style="display:none" id="manualinput-tab">
                 <div class="col row">
                     <div class="col-12 ">
-                        <h4>Region A</h4>
+                        <h4 data-translate="Region A">Region A</h4>
                     </div>
                     <div class="form-group col">
                         <label for="AtSIE">tSIE</label>
                         <input type="number" id="AtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
-                        <label for="ACPS">CPS</label>
-                        <input type="number" id="ACPS" class="form-control required">
+                        <label for="ACPM">CPM</label>
+                        <input type="number" id="ACPM" class="form-control required">
                     </div>
                 </div>
 
                 <div class="col row">
                     <div class="col-12">
-                        <h4>Region B</h4>
+                        <h4 data-translate="Region B">Region B</h4>
                     </div>
                     <div class="form-group col">
                         <label for="BtSIE">tSIE</label>
                         <input type="number" id="BtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
-                        <label for="BCPS">CPS</label>
-                        <input type="number" id="BCPS" class="form-control required">
+                        <label for="BCPM">CPM</label>
+                        <input type="number" id="BCPM" class="form-control required">
                     </div>
                 </div>
 
                 <div class="col row">
                     <div class="col-12">
-                        <h4>Region C</h4>
+                        <h4 data-translate="Region C">Region C</h4>
                     </div>
                     <div class="form-group col">
                         <label for="CtSIE">tSIE</label>
                         <input type="number" id="CtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
-                        <label for="CCPS">CPS</label>
-                        <input type="number" id="CCPS" class="form-control required">
+                        <label for="CCPM">CPM</label>
+                        <input type="number" id="CCPM" class="form-control required">
                     </div>
                 </div>
 
@@ -119,8 +119,8 @@
                         <input type="number" id="backtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
-                        <label for="backCPS">CPS</label>
-                        <input type="number" id="backCPS" class="form-control required">
+                        <label for="backCPM">CPM</label>
+                        <input type="number" id="backCPM" class="form-control required">
                     </div>
                 </div>
 
@@ -129,13 +129,13 @@
             <div class="row col-4 offset-4" id="calculate-buttons" style="display:none">
                 <div class="row col-12">
                     <div class="col">
-                        <button type="button" id="calculate" class="btn btn-success">Calculate</button>
+                        <button type="button" id="calculate" class="btn btn-success" data-translate="Calculate">Calculate</button>
                     </div>
                     <div class="col">
                         <input type="reset" value="Reset" class="btn btn-danger">
                     </div>
                     <div class="col">
-                        <button type="button" id="back-btn" class="btn btn-warning">Back</button>
+                        <button type="button" id="back-btn" class="btn btn-warning" data-translate="Back">Back</button>
                     </div>
                 </div>
                 <div class="col-12 form-group">
@@ -216,7 +216,7 @@
 
                 if (!$('#sample').val()) {
                     $('#sample').addClass('is-invalid');
-                    alert(t('Empty Sample'));
+                    alert(t('No sample quantity'));
                     return false;
                 }
 
@@ -237,21 +237,27 @@
                         }
                     })
                     if (!flag) {
-                        alert('Empty Field');
+                        alert(t('Empty field'));
                         return false;
                     }
 
                     var AtSIE = parseFloat($('#AtSIE').val());
-                    var ACPS = parseFloat($('#ACPS').val());
+                    var ACPM = parseFloat($('#ACPM').val());
                     var BtSIE = parseFloat($('#BtSIE').val());
-                    var BCPS = parseFloat($('#BCPS').val());
+                    var BCPM = parseFloat($('#BCPM').val());
                     var CtSIE = parseFloat($('#CtSIE').val());
-                    var CCPS = parseFloat($('#CCPS').val());
+                    var CCPM = parseFloat($('#CCPM').val());
                     var backtSIE = parseFloat($('#backtSIE').val());
-                    var backCPS = parseFloat($('#backCPS').val());
+                    var backCPM = parseFloat($('#backCPM').val());
 
                     //Τα 8 πεδία (αυτονόητα ονόματα)
-                    console.log(AtSIE, ACPS, BtSIE, BCPS, CtSIE, CCPS, backtSIE, backCPS);
+                    console.log(AtSIE, ACPM, BtSIE, BCPM, CtSIE, CCPM, backtSIE, backCPM);
+
+                    var Beff = (3.2134E-08 * BtSIE^3) + (-1.1461E-04 * BtSIE^2) + (1.5223E-01 * BtSIE) + (-6.5804E+00)
+                    var Ceff = (2.2397E-07 * CtSIE^3) + (-4.3019E-04 * CtSIE^2) + (2.5815E-01 * CtSIE) + (4.6734E+01)
+
+                    var Bacttot = ((BCPM/60)/(Beff/100))/sample
+                    var Cacttot = ((CCPM/60)/(Ceff/100))/sample
 
                     result = 321;
 
