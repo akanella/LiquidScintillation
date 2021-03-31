@@ -3,8 +3,8 @@
 <meta charset="utf-8">
 
 <head>
-    <title>Calculation</title>
-    <script src="js/jquery.js"></script>
+    <title>LiquidScintillation</title>
+    <script src="js/jquery.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/bootstrap.min.js"></script>
 </head>
@@ -14,7 +14,7 @@
         <img src="img/en.png" alt="English" style="width:60px;cursor:pointer" class="languages" data-lang="eng">
         <img src="img/fr.png" alt="French" style="width:60px;cursor:pointer" class="languages" data-lang="fr">
     </div>
-    <form>
+    <form id="LiquidScintillation">
         <div class="row col-12">
             <div class="col-4 text-center" style="border-right:1px black solid">
                 <div class="form-group col row" style="margin-top:50px">
@@ -23,7 +23,7 @@
                         <h4 class="translatable" data-fr="Samplefr" data-eng="Sample">Sample</h4>
                     </div>
                     <div class="form-group col">
-                        <input type="number" id="sample" class="form-control">
+                        <input type="number" id="sample" class="form-control" required>
                     </div>
                     <div class="form-group col">
                         <select id="sampleselect" class="form-control">
@@ -61,11 +61,11 @@
                     </div>
                     <div class="form-group col">
                         <label for="AtSIE">tSIE</label>
-                        <input type="number" id="AtSIE" class="form-control">
+                        <input type="number" id="AtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
                         <label for="ACPS">CPS</label>
-                        <input type="number" id="ACPS" class="form-control">
+                        <input type="number" id="ACPS" class="form-control required">
                     </div>
                 </div>
 
@@ -75,11 +75,11 @@
                     </div>
                     <div class="form-group col">
                         <label for="BtSIE">tSIE</label>
-                        <input type="number" id="BtSIE" class="form-control">
+                        <input type="number" id="BtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
                         <label for="BCPS">CPS</label>
-                        <input type="number" id="BCPS" class="form-control">
+                        <input type="number" id="BCPS" class="form-control required">
                     </div>
                 </div>
 
@@ -89,11 +89,11 @@
                     </div>
                     <div class="form-group col">
                         <label for="CtSIE">tSIE</label>
-                        <input type="number" id="CtSIE" class="form-control">
+                        <input type="number" id="CtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
                         <label for="CCPS">CPS</label>
-                        <input type="number" id="CCPS" class="form-control">
+                        <input type="number" id="CCPS" class="form-control required">
                     </div>
                 </div>
 
@@ -103,11 +103,11 @@
                     </div>
                     <div class="form-group col">
                         <label for="backtSIE">tSIE</label>
-                        <input type="number" id="backtSIE" class="form-control">
+                        <input type="number" id="backtSIE" class="form-control required">
                     </div>
                     <div class="form-group col">
                         <label for="backCPS">CPS</label>
-                        <input type="number" id="backCPS" class="form-control">
+                        <input type="number" id="backCPS" class="form-control required">
                     </div>
                 </div>
 
@@ -173,21 +173,60 @@
             })
 
             $('#calculate').on('click', async function () {
+                $('.is-invalid').removeClass('is-invalid');
+
+                if (!$('#sample').val()) {
+                    $('#sample').addClass('is-invalid');
+                    alert('Empty Sample');
+                    return false;
+                }
+
+                //sample είναι το πεδίο με τον αριθμό
                 var sample = parseInt($('#sample').val());
+
+                //sampleselect είναι ο αριθμός από το dropdown
+                var sampleselect = parseInt($('#sampleselect').val());
                 var result = null;
 
                 if (inputtype === 'manual') {
+
+                    let flag = true;
+                    $('#manualinput-tab .required').each(function () {
+                        $(this).addClass('is-invalid');
+                        if (!$(this).val()) {
+                            flag = false;
+                        }
+                    })
+                    if (!flag) {
+                        alert('Empty Field');
+                        return false;
+                    }
+
+                    var AtSIE = parseInt($('#AtSIE').val());
+                    var ACPS = parseInt($('#ACPS').val());
+                    var BtSIE = parseInt($('#BtSIE').val());
+                    var BCPS = parseInt($('#BCPS').val());
+                    var CtSIE = parseInt($('#CtSIE').val());
+                    var CCPS = parseInt($('#CCPS').val());
+                    var backtSIE = parseInt($('#backtSIE').val());
+                    var backCPS = parseInt($('#backCPS').val());
+
+                    //Τα 8 πεδία (αυτονόητα ονόματα)
+                    console.log(AtSIE, ACPS, BtSIE, BCPS, CtSIE, CCPS, backtSIE, backCPS);
+
+                    result = 321;
 
                 } else if (inputtype === 'file') {
 
                     var files = $('#fileinput').prop('files');
                     var background = $('#backgroundfile').prop('files');
-                    console.log(files, background);
                     if (files.length === 0) {
+                        $('#fileinput').addClass('is-invalid');
                         alert('Empty File Input');
                         return false;
                     }
                     if (background.length === 0) {
+                        $('#backgroundfile').addClass('is-invalid');
                         alert('Empty Background Input');
                         return false;
                     }
@@ -227,20 +266,17 @@
                         throw err;
                     });
 
-                    result = 123;
-
+                    //filedata είναι array μέ τα data των αρχείων
                     console.log(filedata);
+
+                    //backgrounddata είναι τα data του background file
                     console.log(backgrounddata);
+
+                    result = 123;
 
                 } else {
                     alert('Wat?');
                 }
-
-                var number = parseInt($('#numberinput').val());
-
-
-
-
 
                 $('#result').val(result);
 
