@@ -10,13 +10,17 @@
 </head>
 
 <body>
+    <div class="text-center">
+        <img src="img/en.png" alt="English" style="width:60px;cursor:pointer" class="languages" data-lang="eng">
+        <img src="img/fr.png" alt="French" style="width:60px;cursor:pointer" class="languages" data-lang="fr">
+    </div>
     <form>
         <div class="row col-12">
             <div class="col-4 text-center" style="border-right:1px black solid">
                 <div class="form-group col row" style="margin-top:50px">
 
                     <div class="col-12 ">
-                        <h4>Sample</h4>
+                        <h4 class="translatable" data-fr="Samplefr" data-eng="Sample">Sample</h4>
                     </div>
                     <div class="form-group col">
                         <input type="number" id="sample" class="form-control">
@@ -128,6 +132,31 @@
 
     <script>
         $(document).ready(function () {
+            var lang = 'eng';
+            function translate(lang) {
+                $('.translatable').each(function () {
+                    let translated = $(this).data(lang);
+                    if (translated) {
+                        $(this).html(translated);
+                    }
+                })
+            }
+
+            if (typeof (Storage) !== "undefined") {
+                let storedlang = localStorage.getItem("language");
+                if (storedlang) {
+                    lang = storedlang;
+                    translate(lang);
+                }
+            }
+
+            $('.languages').on('click', function () {
+                translate($(this).data('lang'));
+                if (typeof (Storage) !== "undefined") {
+                    localStorage.setItem("language", $(this).data('lang'));
+                }
+            })
+
             var inputtype = null;
             $('#manualinput-btn').on('click', function () {
                 inputtype = 'manual';
@@ -153,7 +182,7 @@
 
                     var files = $('#fileinput').prop('files');
                     var background = $('#backgroundfile').prop('files');
-                    console.log(files,background);
+                    console.log(files, background);
                     if (files.length === 0) {
                         alert('Empty File Input');
                         return false;
@@ -199,9 +228,9 @@
                     });
 
                     result = 123;
-                    
-                console.log(filedata);
-                console.log(backgrounddata);
+
+                    console.log(filedata);
+                    console.log(backgrounddata);
 
                 } else {
                     alert('Wat?');
