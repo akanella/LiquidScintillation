@@ -200,7 +200,7 @@
                 var sample = parseInt($('#sample').val());
 
                 //sampleselect είναι ο αριθμός από το dropdown
-                var sampleselect = parseInt($('#sampleselect').val());
+                var sampleselect = $('#sampleselect').val();
                 var result = null;
 
                 if (inputtype === 'manual') {
@@ -217,14 +217,14 @@
                         return false;
                     }
 
-                    var AtSIE = parseInt($('#AtSIE').val());
-                    var ACPS = parseInt($('#ACPS').val());
-                    var BtSIE = parseInt($('#BtSIE').val());
-                    var BCPS = parseInt($('#BCPS').val());
-                    var CtSIE = parseInt($('#CtSIE').val());
-                    var CCPS = parseInt($('#CCPS').val());
-                    var backtSIE = parseInt($('#backtSIE').val());
-                    var backCPS = parseInt($('#backCPS').val());
+                    var AtSIE = parseFloat($('#AtSIE').val());
+                    var ACPS = parseFloat($('#ACPS').val());
+                    var BtSIE = parseFloat($('#BtSIE').val());
+                    var BCPS = parseFloat($('#BCPS').val());
+                    var CtSIE = parseFloat($('#CtSIE').val());
+                    var CCPS = parseFloat($('#CCPS').val());
+                    var backtSIE = parseFloat($('#backtSIE').val());
+                    var backCPS = parseFloat($('#backCPS').val());
 
                     //Τα 8 πεδία (αυτονόητα ονόματα)
                     console.log(AtSIE, ACPS, BtSIE, BCPS, CtSIE, CCPS, backtSIE, backCPS);
