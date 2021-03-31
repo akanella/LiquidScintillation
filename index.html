@@ -121,6 +121,9 @@
                     <div class="col">
                         <input type="reset" value="Reset" class="btn btn-danger">
                     </div>
+                    <div class="col">
+                        <button type="button" id="back-btn" class="btn btn-warning">Back</button>
+                    </div>
                 </div>
                 <div class="col-12 form-group">
                     <label for="result">Result:</label>
@@ -187,6 +190,14 @@
                 $('#calculate-buttons').show();
             })
 
+            $('#back-btn').on('click', function () {
+                inputtype = null;
+                $('#input-buttons').show();
+                $('#manualinput-tab').hide();
+                $('#fileinput-tab').hide();
+                $('#calculate-buttons').hide();
+            })
+
             $('#calculate').on('click', async function () {
                 $('.is-invalid').removeClass('is-invalid');
 
@@ -197,7 +208,7 @@
                 }
 
                 //sample είναι το πεδίο με τον αριθμό
-                var sample = parseInt($('#sample').val());
+                var sample = parseFloat($('#sample').val());
 
                 //sampleselect είναι ο αριθμός από το dropdown
                 var sampleselect = $('#sampleselect').val();
@@ -207,8 +218,8 @@
 
                     let flag = true;
                     $('#manualinput-tab .required').each(function () {
-                        $(this).addClass('is-invalid');
                         if (!$(this).val()) {
+                            $(this).addClass('is-invalid');
                             flag = false;
                         }
                     })
