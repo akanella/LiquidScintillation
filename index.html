@@ -321,13 +321,13 @@
 
                     for (var i in tSIE) {
                         var eff = (3.2134E-08 * tSIE[i] * tSIE[i] * tSIE[i]) + (-1.1461E-04 * tSIE[i] * tSIE[i]) + (1.5223E-01 * tSIE[i]) + (-6.5804E+00)
-                        var bkgrndeff = (3.2134E-08 * bkgrndtSIE[i] * bkgrndtSIE[i] * bkgrndtSIE[i]) + (-1.1461E-04 * bkgrndtSIE[i] * bkgrndtSIE[i]) + (1.5223E-01 * bkgrndtSIE[i]) + (-6.5804E+00)
+                        var bkgrndeff = (3.2134E-08 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (-1.1461E-04 * bkgrndtSIE * bkgrndtSIE) + (1.5223E-01 * bkgrndtSIE) + (-6.5804E+00)
 
                         var Bact = ((BCPM[i] / 60) / (eff / 100)) / sample
                         var Cact = ((CCPM[i] / 60) / (eff / 100)) / sample
 
-                        var bckgrndBact = ((bkgrndBCPM[i] / 60) / (bkgrndeff / 100))
-                        var bckgrndCact = ((bkgrndCCPM[i] / 60) / (bkgrndeff / 100))
+                        var bckgrndBact = ((bkgrndBCPM / 60) / (bkgrndeff / 100))
+                        var bckgrndCact = ((bkgrndCCPM / 60) / (bkgrndeff / 100))
 
                         var Bactsp = Bact - bckgrndBact
                         var Cactsp = Cact - bckgrndCact
@@ -338,7 +338,7 @@
 
                     mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
                     std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
-
+                    
                     result = mean + '&pm;' + std;
                     // result = Bactsp;
 
