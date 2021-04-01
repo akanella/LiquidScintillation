@@ -13,5 +13,7 @@ var french = {
     "Liquid Scintillation": "Scintillation liquide",
     "Sample measurment": "Mésure d'échantillon",
     "Full Range Spectrum": "Spectre complet",
-    "Reset": "Réinitialiser"
+    "Reset": "Réinitialiser",
+    "Activity": "Activité",
+    "Background": "Bruit de fond"
 };
