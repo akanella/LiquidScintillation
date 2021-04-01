@@ -12,5 +12,6 @@ var french = {
     "Liquid Scintillation Activity Calculator": "Calculateur d'activité de scintillation liquide",
     "Liquid Scintillation": "Scintillation liquide",
     "Sample measurment": "Mésure d'échantillon",
-    "Full Range Spectrum": "Spectre complet"
+    "Full Range Spectrum": "Spectre complet",
+    "Reset": "Réinitialiser"
 };
