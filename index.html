@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 
 <head>
-    <title>LiquidScintillation</title>
+    <title data-translate="Liquid Scintillation">Liquid Scintillation</title>
     <script src="js/jquery.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/bootstrap.min.js"></script>
@@ -11,16 +11,9 @@
 </head>
 
 <body>
-    <!--     <div class="text-center">
-        <img src="img/en.png" alt="English" style="width:60px;cursor:pointer" class="languages" data-lang="eng">
-        <img src="img/fr.png" alt="French" style="width:60px;cursor:pointer" class="languages" data-lang="fr">
-    </div> -->
-    <!--     <div class="text-left">
-        <span> Liquid Scintilattion Calculator </span>
-    </div> -->
     <div class="row col-12">
         <div class="col-10">
-            <b>Liquid Scintillation Activity Calculator</b>
+            <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b> <span>v. 0.22</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -71,15 +64,22 @@
 
             <div class="col-8 row text-center" style="display:none" id="manualinput-tab">
                 <div class="col-12">
-                    <h4>Kati</h4>
+                    <h4 data-translate="Sample measurment">Sample measurment</h4>
+                </div>
+                <div class="col row">
+                    <div class="col-12 ">
+                        <h4></h4>
+                        <h6></h6>
+                    </div>
+                    <div class="form-group col">
+                        <label for="tSIE">tSIE</label>
+                        <input type="number" id="tSIE" class="form-control required">
+                    </div>
                 </div>
                 <div class="col row">
                     <div class="col-12 ">
                         <h4 data-translate="Region A">Region A</h4>
-                    </div>
-                    <div class="form-group col">
-                        <label for="AtSIE">tSIE</label>
-                        <input type="number" id="AtSIE" class="form-control required">
+                        <h6 data-translate="Full Range Spectrum">Full Range Spectrum</h6>
                     </div>
                     <div class="form-group col">
                         <label for="ACPM">CPM</label>
@@ -90,10 +90,7 @@
                 <div class="col row">
                     <div class="col-12">
                         <h4 data-translate="Region B">Region B</h4>
-                    </div>
-                    <div class="form-group col">
-                        <label for="BtSIE">tSIE</label>
-                        <input type="number" id="BtSIE" class="form-control required">
+                        <h6><sup>3</sup>H</h6>
                     </div>
                     <div class="form-group col">
                         <label for="BCPM">CPM</label>
@@ -104,10 +101,7 @@
                 <div class="col row">
                     <div class="col-12">
                         <h4 data-translate="Region C">Region C</h4>
-                    </div>
-                    <div class="form-group col">
-                        <label for="CtSIE">tSIE</label>
-                        <input type="number" id="CtSIE" class="form-control required">
+                        <h6><sup>14</sup>C</h6>
                     </div>
                     <div class="form-group col">
                         <label for="CCPM">CPM</label>
@@ -120,43 +114,44 @@
                 </div>
                 <div class="col row">
                     <div class="col-12 ">
+                        <h4></h4>
+                        <h6></h6>
+                    </div>
+                    <div class="form-group col">
+                        <label for="bkgrndtSIE">tSIE</label>
+                        <input type="number" id="bkgrndtSIE" class="form-control required">
+                    </div>
+                </div>
+                <div class="col row">
+                    <div class="col-12 ">
                         <h4 data-translate="Region A">Region A</h4>
+                        <h6 data-translate="Full Range Spectrum">Full Range Spectrum</h6>
                     </div>
                     <div class="form-group col">
-                        <label for="AtSIE">tSIE</label>
-                        <input type="number" id="AbacktSIE" class="form-control required">
-                    </div>
-                    <div class="form-group col">
-                        <label for="ACPM">CPM</label>
-                        <input type="number" id="AbackCPM" class="form-control required">
+                        <label for="bkgrndACPM">CPM</label>
+                        <input type="number" id="bkgrndACPM" class="form-control required">
                     </div>
                 </div>
 
                 <div class="col row">
                     <div class="col-12">
                         <h4 data-translate="Region B">Region B</h4>
+                        <h6><sup>3</sup>H</h6>
                     </div>
                     <div class="form-group col">
-                        <label for="BtSIE">tSIE</label>
-                        <input type="number" id="BbacktSIE" class="form-control required">
-                    </div>
-                    <div class="form-group col">
-                        <label for="BCPM">CPM</label>
-                        <input type="number" id="BbackCPM" class="form-control required">
+                        <label for="bkgrndBCPM">CPM</label>
+                        <input type="number" id="bkgrndBCPM" class="form-control required">
                     </div>
                 </div>
 
                 <div class="col row">
                     <div class="col-12">
                         <h4 data-translate="Region C">Region C</h4>
+                        <h6><sup>14</sup>C</h6>
                     </div>
                     <div class="form-group col">
-                        <label for="CtSIE">tSIE</label>
-                        <input type="number" id="CbacktSIE" class="form-control required">
-                    </div>
-                    <div class="form-group col">
-                        <label for="CCPM">CPM</label>
-                        <input type="number" id="CbackCPM" class="form-control required">
+                        <label for="bkgrndCCPM">CPM</label>
+                        <input type="number" id="bkgrndCCPM" class="form-control required">
                     </div>
                 </div>
 
@@ -278,26 +273,34 @@
                         return false;
                     }
 
-                    var AtSIE = parseFloat($('#AtSIE').val());
+                    var tSIE = parseFloat($('#tSIE').val());
                     var ACPM = parseFloat($('#ACPM').val());
-                    var BtSIE = parseFloat($('#BtSIE').val());
                     var BCPM = parseFloat($('#BCPM').val());
-                    var CtSIE = parseFloat($('#CtSIE').val());
                     var CCPM = parseFloat($('#CCPM').val());
-                    
-                    var backtSIE = parseFloat($('#backtSIE').val());
-                    var backCPM = parseFloat($('#backCPM').val());
+                    var bkgrndtSIE = parseFloat($('#bkgrndtSIE').val());
+                    var bkgrndACPM = parseFloat($('#bkgrndACPM').val());
+                    var bkgrndBCPM = parseFloat($('#bkgrndBCPM').val());
+                    var bkgrndCCPM = parseFloat($('#bkgrndCCPM').val());
 
                     //Τα 8 πεδία (αυτονόητα ονόματα)
-                    console.log(AtSIE, ACPM, BtSIE, BCPM, CtSIE, CCPM, backtSIE, backCPM);
+                    console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
-                    var Beff = (3.2134E-08 * BtSIE ^ 3) + (-1.1461E-04 * BtSIE ^ 2) + (1.5223E-01 * BtSIE) + (-6.5804E+00)
-                    var Ceff = (2.2397E-07 * CtSIE ^ 3) + (-4.3019E-04 * CtSIE ^ 2) + (2.5815E-01 * CtSIE) + (4.6734E+01)
 
-                    var Bacttot = ((BCPM / 60) / (Beff / 100)) / sample
-                    var Cacttot = ((CCPM / 60) / (Ceff / 100)) / sample
+                    var eff = (3.2134E-08 * tSIE * tSIE * tSIE) + (-1.1461E-04 * tSIE * tSIE) + (1.5223E-01 * tSIE) + (-6.5804E+00)
+                    var bkgrndeff = (3.2134E-08 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (-1.1461E-04 * bkgrndtSIE * bkgrndtSIE) + (1.5223E-01 * bkgrndtSIE) + (-6.5804E+00)
 
-                    result = 321;
+                    var Bact = ((BCPM / 60) / (eff / 100)) / sample
+                    var Cact = ((CCPM / 60) / (eff / 100)) / sample
+
+                    var bckgrndBact = ((bkgrndBCPM / 60) / (bkgrndeff / 100))
+                    var bckgrndCact = ((bkgrndCCPM / 60) / (bkgrndeff / 100))
+
+                    var Bactsp = Bact - bckgrndBact
+                    var Cactsp = Cact - bckgrndCact
+
+                    var aVar = 2^3
+
+                    result = Bactsp;
 
                 } else if (inputtype === 'file') {
 
