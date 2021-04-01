@@ -69,12 +69,15 @@
                 </div>
                 <div class="col row">
                     <div class="col-12 ">
-                        <h4>&nbsp;</h4>
+                        <button type="button" class="btn btn-success btn-circle" style="border-radius:40%"
+                            id="addsample-btn">+</button>
+                        <button type="button" class="btn btn-danger btn-circle" style="border-radius:40%"
+                            id="removesample-btn">-</button>
                         <h6>&nbsp;</h6>
                     </div>
                     <div class="form-group col">
                         <label for="tSIE">tSIE</label>
-                        <input type="number" id="tSIE" class="form-control required">
+                        <input type="number" id="tSIE" name="tSIE[]" class="form-control required">
                     </div>
                 </div>
                 <div class="col row">
@@ -84,7 +87,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="ACPM">CPM</label>
-                        <input type="number" id="ACPM" class="form-control required">
+                        <input type="number" id="ACPM" name="ACPM[]" class="form-control required">
                     </div>
                 </div>
 
@@ -95,7 +98,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="BCPM">CPM</label>
-                        <input type="number" id="BCPM" class="form-control required">
+                        <input type="number" id="BCPM" name="BCPM[]" class="form-control required">
                     </div>
                 </div>
 
@@ -106,7 +109,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="CCPM">CPM</label>
-                        <input type="number" id="CCPM" class="form-control required">
+                        <input type="number" id="CCPM" name="CCPM[]" class="form-control required">
                     </div>
                 </div>
 
@@ -247,8 +250,25 @@
                 $('#calculate-buttons').hide();
             })
 
+            $('#addsample-btn').on('click', function () {
+                $("input[name='tSIE[]']").last().after('<input type="number" name="tSIE[]" class="form-control required">');
+                $("input[name='ACPM[]']").last().after('<input type="number" name="ACPM[]" class="form-control required">');
+                $("input[name='BCPM[]']").last().after('<input type="number" name="BCPM[]" class="form-control required">');
+                $("input[name='CCPM[]']").last().after('<input type="number" name="CCPM[]" class="form-control required">');
+            })
+
+            $('#removesample-btn').on('click', function () {
+                if ($("input[name='tSIE[]']").length == 1) {
+                    return false;
+                }
+                $("input[name='tSIE[]']").last().remove();
+                $("input[name='ACPM[]']").last().remove();
+                $("input[name='BCPM[]']").last().remove();
+                $("input[name='CCPM[]']").last().remove();
+            })
+
             $('#unit').html('Bq/' + $('#sampleselect').val());
-            $('#sampleselect').on('change',function(){
+            $('#sampleselect').on('change', function () {
                 $('#unit').html('Bq/' + $(this).val());
             })
 
@@ -282,10 +302,18 @@
                         return false;
                     }
 
-                    var tSIE = parseFloat($('#tSIE').val());
-                    var ACPM = parseFloat($('#ACPM').val());
-                    var BCPM = parseFloat($('#BCPM').val());
-                    var CCPM = parseFloat($('#CCPM').val());
+                    //Arrays με τις τιμές του κάθε κουτιού
+                    var tSIE = $("input[name='tSIE[]']").map(function () { return parseFloat($(this).val()); }).get();
+                    var ACPM = $("input[name='ACPM[]']").map(function () { return parseFloat($(this).val()); }).get();
+                    var BCPM = $("input[name='BCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
+                    var CCPM = $("input[name='CCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
+
+                    //Αν θες τις μέσες τιμές χωρίς array και βλακίες πάρε αυτά
+                    // var tSIE = $("input[name='tSIE[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='tSIE[]']").length;
+                    // var ACPM = $("input[name='ACPM[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='ACPM[]']").length;
+                    // var BCPM = $("input[name='BCPM[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='BCPM[]']").length;
+                    // var CCPM = $("input[name='CCPM[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='CCPM[]']").length;
+                    
                     var bkgrndtSIE = parseFloat($('#bkgrndtSIE').val());
                     var bkgrndACPM = parseFloat($('#bkgrndACPM').val());
                     var bkgrndBCPM = parseFloat($('#bkgrndBCPM').val());
