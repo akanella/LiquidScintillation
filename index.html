@@ -33,7 +33,7 @@
                         <input type="number" id="sample" class="form-control" required>
                     </div>
                     <div class="form-group col">
-                        <select id="sampleselect" class="form-control">
+                        <select id="sampleunit" class="form-control">
                             <option value="ml">ml</option>
                             <option value="gr">gr</option>
                         </select>
@@ -168,18 +168,15 @@
                             data-translate="Calculate">Calculate</button>
                     </div>
                     <div class="col">
-                        <input type="reset" value="Reset" class="btn btn-danger" data-translate="Reset">
+                        <input type="reset" id="reset-btn" value="Reset" class="btn btn-danger" data-translate="Reset">
                     </div>
                     <div class="col">
                         <button type="button" id="back-btn" class="btn btn-warning" data-translate="Back">Back</button>
                     </div>
                 </div>
-                <div class="col-12 form-group">
+                <div class="col-12 form-group" id="result-tab" style="display:none">
                     <label for="result" data-translate="Activity">Activity:</label>
-                    <div class="row">
-                        <input type="text" readonly id="result" class="form-control col-10">
-                        <span class="col-2" id="unit"></span>
-                    </div>
+                    <div id="result" class="alert alert-success"></div>
                 </div>
             </div>
         </div>
@@ -232,13 +229,20 @@
                 inputtype = 'manual';
                 $('#input-buttons').hide();
                 $('#manualinput-tab').show();
+                $('#result-tab').hide();
                 $('#calculate-buttons').show();
+            })
+
+            $('#reset-btn').on('click', function () {
+                inputtype = 'manual';
+                $('#result-tab').hide();
             })
 
             $('#fileinput-btn').on('click', function () {
                 inputtype = 'file';
                 $('#input-buttons').hide();
                 $('#fileinput-tab').show();
+                $('#result-tab').hide();
                 $('#calculate-buttons').show();
             })
 
@@ -247,6 +251,7 @@
                 $('#input-buttons').show();
                 $('#manualinput-tab').hide();
                 $('#fileinput-tab').hide();
+                $('#result-tab').hide();
                 $('#calculate-buttons').hide();
             })
 
@@ -267,11 +272,6 @@
                 $("input[name='CCPM[]']").last().remove();
             })
 
-            $('#unit').html('Bq/' + $('#sampleselect').val());
-            $('#sampleselect').on('change', function () {
-                $('#unit').html('Bq/' + $(this).val());
-            })
-
             $('#calculate').on('click', async function () {
                 $('.is-invalid').removeClass('is-invalid');
 
@@ -284,8 +284,8 @@
                 //sample είναι το πεδίο με τον αριθμό
                 var sample = parseFloat($('#sample').val());
 
-                //sampleselect είναι ο αριθμός από το dropdown
-                var sampleselect = $('#sampleselect').val();
+                //sampleunit είναι το unit του sample
+                var sampleunit = $('#sampleunit').val();
                 var result = null;
 
                 if (inputtype === 'manual') {
@@ -307,7 +307,7 @@
                     var ACPM = $("input[name='ACPM[]']").map(function () { return parseFloat($(this).val()); }).get();
                     var BCPM = $("input[name='BCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
                     var CCPM = $("input[name='CCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
-                    
+
                     var bkgrndtSIE = parseFloat($('#bkgrndtSIE').val());
                     var bkgrndACPM = parseFloat($('#bkgrndACPM').val());
                     var bkgrndBCPM = parseFloat($('#bkgrndBCPM').val());
@@ -338,8 +338,8 @@
 
                     mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
                     std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
-                    
-                    result = mean + ' +/- ' + std;
+
+                    result = mean + ' &pm; ' + std;
 
                 } else if (inputtype === 'file') {
 
@@ -403,7 +403,8 @@
                     alert('Wat?');
                 }
 
-                $('#result').val(result);
+                $('#result').html(result + ' Bq/' + sampleunit);
+                $('#result-tab').show();
 
             })
         })
