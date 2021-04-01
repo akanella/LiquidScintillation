@@ -307,37 +307,41 @@
                     var ACPM = $("input[name='ACPM[]']").map(function () { return parseFloat($(this).val()); }).get();
                     var BCPM = $("input[name='BCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
                     var CCPM = $("input[name='CCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
-
-                    //Αν θες τις μέσες τιμές χωρίς array και βλακίες πάρε αυτά
-                    // var tSIE = $("input[name='tSIE[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='tSIE[]']").length;
-                    // var ACPM = $("input[name='ACPM[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='ACPM[]']").length;
-                    // var BCPM = $("input[name='BCPM[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='BCPM[]']").length;
-                    // var CCPM = $("input[name='CCPM[]']").map(function () { return parseFloat($(this).val()); }).get().reduce(function (sum, val) { return sum + val }, 0) / $("input[name='CCPM[]']").length;
                     
                     var bkgrndtSIE = parseFloat($('#bkgrndtSIE').val());
                     var bkgrndACPM = parseFloat($('#bkgrndACPM').val());
                     var bkgrndBCPM = parseFloat($('#bkgrndBCPM').val());
                     var bkgrndCCPM = parseFloat($('#bkgrndCCPM').val());
 
+                    var Bactspm = []
+                    var Cactspm = []
+
                     //Τα 8 πεδία (αυτονόητα ονόματα)
                     console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
+                    for (var i in tSIE) {
+                        var eff = (3.2134E-08 * tSIE[i] * tSIE[i] * tSIE[i]) + (-1.1461E-04 * tSIE[i] * tSIE[i]) + (1.5223E-01 * tSIE[i]) + (-6.5804E+00)
+                        var bkgrndeff = (3.2134E-08 * bkgrndtSIE[i] * bkgrndtSIE[i] * bkgrndtSIE[i]) + (-1.1461E-04 * bkgrndtSIE[i] * bkgrndtSIE[i]) + (1.5223E-01 * bkgrndtSIE[i]) + (-6.5804E+00)
 
-                    var eff = (3.2134E-08 * tSIE * tSIE * tSIE) + (-1.1461E-04 * tSIE * tSIE) + (1.5223E-01 * tSIE) + (-6.5804E+00)
-                    var bkgrndeff = (3.2134E-08 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (-1.1461E-04 * bkgrndtSIE * bkgrndtSIE) + (1.5223E-01 * bkgrndtSIE) + (-6.5804E+00)
+                        var Bact = ((BCPM[i] / 60) / (eff / 100)) / sample
+                        var Cact = ((CCPM[i] / 60) / (eff / 100)) / sample
 
-                    var Bact = ((BCPM / 60) / (eff / 100)) / sample
-                    var Cact = ((CCPM / 60) / (eff / 100)) / sample
+                        var bckgrndBact = ((bkgrndBCPM[i] / 60) / (bkgrndeff / 100))
+                        var bckgrndCact = ((bkgrndCCPM[i] / 60) / (bkgrndeff / 100))
 
-                    var bckgrndBact = ((bkgrndBCPM / 60) / (bkgrndeff / 100))
-                    var bckgrndCact = ((bkgrndCCPM / 60) / (bkgrndeff / 100))
+                        var Bactsp = Bact - bckgrndBact
+                        var Cactsp = Cact - bckgrndCact
 
-                    var Bactsp = Bact - bckgrndBact
-                    var Cactsp = Cact - bckgrndCact
+                        Bactspm.push(Bactsp);
+                        Cactspm.push(Cactsp);
+                    }
 
-                    var aVar = 2 ^ 3
+                    mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
+                    std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
 
-                    result = Bactsp;
+                    result = mean + '&pm;' + std;
+                    // result = Bactsp;
+
 
                 } else if (inputtype === 'file') {
 
