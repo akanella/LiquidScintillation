@@ -15,6 +15,6 @@ var french = {
     "Full Range Spectrum": "Spectre complet",
     "Reset": "Réinitialiser",
     "Activity": "Activité",
-    "Background": "Bruit de fond"
-    "Last efficiency callibaration: 2018": "Dernier étalonage d'efficacité"
+    "Background": "Bruit de fond",
+    "Last efficiency callibaration: 2018": "Dernier étalonage d'efficacité: 2018",
 };
