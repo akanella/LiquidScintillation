@@ -73,7 +73,7 @@
                             id="addsample-btn">+</button>
                         <button type="button" class="btn btn-danger btn-circle" style="border-radius:40%"
                             id="removesample-btn">-</button>
-                        <button type="button" id="back-btn" class="btn btn-warning offset-2"
+                        <button type="button" class="btn btn-warning offset-2 back-btn"
                             data-translate="Back">Back</button>
                         <h6>&nbsp;</h6>
                     </div>
@@ -254,7 +254,7 @@
                 $('#calculate-buttons').show();
             })
 
-            $('#back-btn').on('click', function () {
+            $('.back-btn').on('click', function () {
                 inputtype = null;
                 $('#input-buttons').show();
                 $('#manualinput-tab').hide();
