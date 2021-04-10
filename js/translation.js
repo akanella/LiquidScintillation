@@ -16,4 +16,5 @@ var french = {
     "Reset": "Réinitialiser",
     "Activity": "Activité",
     "Background": "Bruit de fond"
+    "Last efficiency callibaration: 2018": "Dernier étalonage d'efficacité"
 };
