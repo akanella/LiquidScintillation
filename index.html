@@ -207,6 +207,11 @@
         $(document).ready(function () {
             var lang = 'eng';
 
+            function uncertainty(float) {
+                var found = float.toString().match(/^[+-]?[0-9]+\.(0*)[1-9]+$/);
+                return found ? float.toFixed(found[1].length + 1) : float;
+            }
+
             function t(value) {
                 switch (lang) {
                     case 'fr':
@@ -342,8 +347,8 @@
                     var actspm = []
                     var region = []
                     for (var i in tSIE) {
-                        if (1.1 * BCPM[i] > CCPM[i] && 1.1 * CCPM[i] > ACPM[i]){
-                            var isotope =  t(' of <sup>3</sup>H')
+                        if (1.1 * BCPM[i] > CCPM[i] && 1.1 * CCPM[i] > ACPM[i]) {
+                            var isotope = t(' of <sup>3</sup>H')
                             var aRegion = 'B'
                             var x3 = 3.2134E-08
                             var x2 = -1.1461E-04
@@ -351,7 +356,7 @@
                             var x0 = -6.5804E+00
                             CPM = BCPM[i]
                             bkgrndCPM = bkgrndBCPM
-                        } else if (CCPM[i] > BCPM[i] && 1.1 * CCPM[i] > ACPM[i]){
+                        } else if (CCPM[i] > BCPM[i] && 1.1 * CCPM[i] > ACPM[i]) {
                             var isotope = t(' of <sup>14</sup>C')
                             var aRegion = 'C'
                             var x3 = 2.2397E-07
@@ -382,13 +387,13 @@
 
                     }
 
-                    if (region.every( (val, i, arr) => val === arr[0] )){
-                        if (region[0] == 'A'){
+                    if (region.every((val, i, arr) => val === arr[0])) {
+                        if (region[0] == 'A') {
                             var isotope = t(' of unidentified isotope')
-                        } else if (region[0] == 'B'){
-                            var isotope =  t(' of <sup>3</sup>H')
-                        } else if (region[0] == 'C'){
-                            var isotope =  t(' of <sup>14</sup>C')
+                        } else if (region[0] == 'B') {
+                            var isotope = t(' of <sup>3</sup>H')
+                        } else if (region[0] == 'C') {
+                            var isotope = t(' of <sup>14</sup>C')
                         }
                     } else {
                         alert('Wat?')
