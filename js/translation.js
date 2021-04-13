@@ -14,7 +14,9 @@ var french = {
     "Sample measurment": "Mésure d'échantillon",
     "Full Range Spectrum": "Spectre complet",
     "Reset": "Réinitialiser",
-    "Activity": "Activité",
+    "Activity:": "Activité:",
     "Background": "Bruit de fond",
-    "Last efficiency callibaration: 2018": "Dernier étalonage d'efficacité: 2018",
+    "Last efficiency calibaration: 2018": "Dernier étalonage d'efficacité: 2018",
+    " of ": " de ",
+    "unidentified isotope": "isotope non identifié",
 };

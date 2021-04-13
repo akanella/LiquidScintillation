@@ -164,8 +164,8 @@
                     </div>
                 </div>
                 <div class="col-12 text-right">
-                    <small class="form-text text-muted" data-translate="Last efficiency callibaration: 2018">Last
-                        efficiency callibaration: 2018</small>
+                    <small class="form-text text-muted" data-translate="Last efficiency calibaration: 2018">Last
+                        efficiency calibaration: 2018</small>
                 </div>
 
             </div>
@@ -181,7 +181,8 @@
                     </div>
                 </div>
                 <div class="col-12 form-group" id="result-tab" style="display:none">
-                    <label for="result" data-translate="Activity">Activity:</label>
+                        <h6>&nbsp;</h6>
+                    <label for="result" data-translate="Activity:">Activity:</label>
                     <div id="result" class="alert alert-success"></div>
                 </div>
             </div>
@@ -343,6 +344,27 @@
                     console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
                     for (var i in tSIE) {
+                        
+                        if (1.1 * BCPM > CCPM && 1.1 * CCPM > ACPM){
+                            var isotope =  '<sup>3</sup>H' 
+                            var x3 = 3.2134E-08
+                            var x2 = -1.1461E-04
+                            var x1 = 1.5223E-01
+                            var x0 = -6.5804E+00
+                        } else if (CCPM > BCPM && 1.1 * CCPM > ACPM){
+                            var isotope = '<sup>14</sup>C'
+                            var x3 = 2.2397E-07
+                            var x2 = -4.3019E-04
+                            var x1 = 2.5815E-01
+                            var x0 = 4.6734E+01
+                        } else {
+                            var isotope = t('unidentified isotope')
+                            var x3 = 2.2397E-07
+                            var x2 = -4.3019E-04
+                            var x1 = 2.5815E-01
+                            var x0 = 4.6734E+01
+                        }
+
                         var eff = (3.2134E-08 * tSIE[i] * tSIE[i] * tSIE[i]) + (-1.1461E-04 * tSIE[i] * tSIE[i]) + (1.5223E-01 * tSIE[i]) + (-6.5804E+00)
                         var bkgrndeff = (3.2134E-08 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (-1.1461E-04 * bkgrndtSIE * bkgrndtSIE) + (1.5223E-01 * bkgrndtSIE) + (-6.5804E+00)
 
@@ -357,10 +379,21 @@
 
                         Bactspm.push(Bactsp);
                         Cactspm.push(Cactsp);
+
+                        // var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
+                        // var bkgrndeff = (x3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (x2 * bkgrndtSIE * bkgrndtSIE) + (x1 * bkgrndtSIE) + (x0)
+
+                        // var act = ((CPM[i] / 60) / (eff / 100)) / sample
+                        // var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
+                        // var actsp = act - bckgrndAct
+                        // actspm.push(actsp);
                     }
 
                     mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
                     std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
+
+                    // mean = actspm.reduce((a, b) => a + b) / actspm.length
+                    // std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
 
                     result = mean + ' &pm; ' + std;
 
@@ -426,7 +459,7 @@
                     alert('Wat?');
                 }
 
-                $('#result').html(result + ' Bq/' + sampleunit);
+                $('#result').html('A = ' + result + ' Bq/' + sampleunit + t(' of ') + isotope);
                 $('#result-tab').show();
 
             })
