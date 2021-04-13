@@ -349,7 +349,7 @@
                             var x2 = -1.1461E-04
                             var x1 = 1.5223E-01
                             var x0 = -6.5804E+00
-                            CPM = BCPM[i]
+                            CPM = bkgrndBCPM[i]
                             bkgrndCPM = BCPM[i]
                         } else if (CCPM[i] > BCPM[i] && 1.1 * CCPM[i] > ACPM[i]){
                             var isotope = t(' of <sup>14</sup>C')
@@ -359,7 +359,7 @@
                             var x1 = 2.5815E-01
                             var x0 = 4.6734E+01
                             CPM = CCPM[i]
-                            bkgrndCPM = CCPM[i]
+                            bkgrndCPM = bkgrndCCPM[i]
                         } else {
                             var isotope = t(' of unidentified isotope')
                             var aRegion = 'A'
@@ -368,7 +368,7 @@
                             var x1 = 2.5815E-01
                             var x0 = 4.6734E+01
                             CPM = ACPM[i]
-                            bkgrndCPM = ACPM[i]
+                            bkgrndCPM = bkgrndACPM[i]
                         }
 
                         var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
