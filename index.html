@@ -15,7 +15,7 @@
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 0.49</span>
+            <span>v. 0.5</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -181,7 +181,7 @@
                     </div>
                 </div>
                 <div class="col-12 form-group" id="result-tab" style="display:none">
-                        <h6>&nbsp;</h6>
+                    <h6>&nbsp;</h6>
                     <label for="result" data-translate="Activity:">Activity:</label>
                     <div id="result" class="alert alert-success"></div>
                 </div>
@@ -337,63 +337,67 @@
                     var bkgrndBCPM = parseFloat($('#bkgrndBCPM').val());
                     var bkgrndCCPM = parseFloat($('#bkgrndCCPM').val());
 
-                    var Bactspm = []
-                    var Cactspm = []
-
                     //Τα 8 πεδία (αυτονόητα ονόματα)
                     console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
-
+                    var actspm = []
+                    var region = []
                     for (var i in tSIE) {
-                        
-                        if (1.1 * BCPM > CCPM && 1.1 * CCPM > ACPM){
-                            var isotope =  '<sup>3</sup>H' 
+                        if (1.1 * BCPM[i] > CCPM[i] && 1.1 * CCPM[i] > ACPM[i]){
+                            var isotope =  t(' of <sup>3</sup>H')
+                            var aRegion = 'B'
                             var x3 = 3.2134E-08
                             var x2 = -1.1461E-04
                             var x1 = 1.5223E-01
                             var x0 = -6.5804E+00
-                        } else if (CCPM > BCPM && 1.1 * CCPM > ACPM){
-                            var isotope = '<sup>14</sup>C'
+                            CPM = BCPM[i]
+                            bkgrndCPM = BCPM[i]
+                        } else if (CCPM[i] > BCPM[i] && 1.1 * CCPM[i] > ACPM[i]){
+                            var isotope = t(' of <sup>14</sup>C')
+                            var aRegion = 'C'
                             var x3 = 2.2397E-07
                             var x2 = -4.3019E-04
                             var x1 = 2.5815E-01
                             var x0 = 4.6734E+01
+                            CPM = CCPM[i]
+                            bkgrndCPM = CCPM[i]
                         } else {
-                            var isotope = t('unidentified isotope')
+                            var isotope = t(' of unidentified isotope')
+                            var aRegion = 'A'
                             var x3 = 2.2397E-07
                             var x2 = -4.3019E-04
                             var x1 = 2.5815E-01
                             var x0 = 4.6734E+01
+                            CPM = ACPM[i]
+                            bkgrndCPM = ACPM[i]
                         }
 
-                        var eff = (3.2134E-08 * tSIE[i] * tSIE[i] * tSIE[i]) + (-1.1461E-04 * tSIE[i] * tSIE[i]) + (1.5223E-01 * tSIE[i]) + (-6.5804E+00)
-                        var bkgrndeff = (3.2134E-08 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (-1.1461E-04 * bkgrndtSIE * bkgrndtSIE) + (1.5223E-01 * bkgrndtSIE) + (-6.5804E+00)
+                        var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
+                        var bkgrndeff = (x3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (x2 * bkgrndtSIE * bkgrndtSIE) + (x1 * bkgrndtSIE) + (x0)
 
-                        var Bact = ((BCPM[i] / 60) / (eff / 100)) / sample
-                        var Cact = ((CCPM[i] / 60) / (eff / 100)) / sample
+                        var act = ((CPM / 60) / (eff / 100)) / sample
+                        var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
+                        var actsp = act - bckgrndAct
+                        actspm.push(actsp);
+                        region.push(aRegion)
 
-                        var bckgrndBact = ((bkgrndBCPM / 60) / (bkgrndeff / 100))
-                        var bckgrndCact = ((bkgrndCCPM / 60) / (bkgrndeff / 100))
-
-                        var Bactsp = Bact - bckgrndBact
-                        var Cactsp = Cact - bckgrndCact
-
-                        Bactspm.push(Bactsp);
-                        Cactspm.push(Cactsp);
-
-                        // var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
-                        // var bkgrndeff = (x3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (x2 * bkgrndtSIE * bkgrndtSIE) + (x1 * bkgrndtSIE) + (x0)
-
-                        // var act = ((CPM[i] / 60) / (eff / 100)) / sample
-                        // var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
-                        // var actsp = act - bckgrndAct
-                        // actspm.push(actsp);
                     }
 
-                    mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
-                    std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
+                    if (region.every( (val, i, arr) => val === arr[0] )){
+                        if (region[0] == 'A'){
+                            var isotope = t(' of unidentified isotope')
+                        } else if (region[0] == 'B'){
+                            var isotope =  t(' of <sup>3</sup>H')
+                        } else if (region[0] == 'C'){
+                            var isotope =  t(' of <sup>14</sup>C')
+                        }
+                    } else {
+                        alert('Wat?')
+                    }
+                    // mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
+                    // std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
 
-                    // mean = actspm.reduce((a, b) => a + b) / actspm.length
-                    // std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
+                    mean = actspm.reduce((a, b) => a + b) / actspm.length
+                    std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
 
                     result = mean + ' &pm; ' + std;
 
@@ -459,7 +463,7 @@
                     alert('Wat?');
                 }
 
-                $('#result').html('A = ' + result + ' Bq/' + sampleunit + t(' of ') + isotope);
+                $('#result').html('A = ' + result + ' Bq/' + sampleunit + isotope);
                 $('#result-tab').show();
 
             })

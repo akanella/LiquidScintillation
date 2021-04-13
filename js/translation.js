@@ -19,4 +19,7 @@ var french = {
     "Last efficiency calibaration: 2018": "Dernier étalonage d'efficacité: 2018",
     " of ": " de ",
     "unidentified isotope": "isotope non identifié",
+    " of <sup>3</sup>H": " de <sup>3</sup>H",
+    " of <sup>14</sup>C": " de <sup>14</sup>C",
+    " of unidentified isotope": " d'isotope non identifié",
 };
