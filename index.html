@@ -345,7 +345,8 @@
                         ACPMPE = ACPM[i] / 2000
                         BCPMPE = BCPM[i] / 18.6
                         CCPMPE = CCPM[i] / 156
-                        if ((BCPMPE > CCPMPE && CCPMPE > ACPMPE) || (1.2 * BCPM[i] > CCPM[i] && 1.2 * CCPM[i] > ACPM[i])){
+                        if (BCPMPE > CCPMPE && CCPMPE > ACPMPE){
+                            //  || (1.2 * BCPM[i] > CCPM[i] && 1.2 * CCPM[i] > ACPM[i])
                             var isotope =  t(' of <sup>3</sup>H')
                             var aRegion = 'B'
                             var x3 = 3.2134E-08
@@ -354,7 +355,7 @@
                             var x0 = -6.5804E+00
                             CPM = BCPM[i]
                             bkgrndCPM = bkgrndBCPM
-                        } else if (CCPM[i] > BCPM[i] && 1.1 * CCPM[i] > ACPM[i]){
+                        } else if (CCPM[i] > BCPM[i] && 1.2 * CCPM[i] > ACPM[i]){
                             var isotope = t(' of <sup>14</sup>C')
                             var aRegion = 'C'
                             var x3 = 2.2397E-07
