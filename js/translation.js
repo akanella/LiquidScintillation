@@ -1,9 +1,10 @@
 var french = {
     "Sample quantity":"Quantité d'échantillon",
     "No sample quantity":"Aucune quantité d'échantillon",
-    "Manual input": "Saisie manuelle",
-    "Input Files...": "Input Files...",
+    "Manual input": "Données manuelles",
+    "Input files": "Dossiers données",
     "Calculate": "Calculer",
+    "Isotope": "Isotope",
     "Back": "Retour",
     "Region A": "Région A",
     "Region B": "Région B",

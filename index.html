@@ -15,7 +15,7 @@
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 0.50</span>
+            <span>v. 0.50.iv</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -44,12 +44,25 @@
                     <button type="button" class="btn btn-warning back-btn" data-translate="Back"
                         style="display:none">Back</button>
                 </div>
+                <div class="form-group col row" style="margin-top:80px">
+                    <div class="form-group col">
+                        <span data-translate="Isotope:">Isotope:</span>
+                    </div>
+	                <div class="form-group col">
+	                    <select id="isotope" class="form-control">
+	                        <option value="auto">Auto</option>
+	                        <option value="tritium">H-3</option>
+	                        <option value="carbon">C-14</option>
+	                        <option value="other">Other</option>
+	                    </select>
+	                </div>
+                </div>
             </div>
 
             <div class="col-6 offset-2" id="input-buttons" style="margin-top:50px">
 
-                <button type="button" id="fileinput-btn" class="btn btn-primary" data-translate="Input files...">Input
-                    files...</button>
+                <button type="button" id="fileinput-btn" class="btn btn-primary" data-translate="Input files">Input
+                    files</button>
                 <button type="button" id="manualinput-btn" class="btn btn-secondary"
                     data-translate="Manual input">Manual input</button>
 
