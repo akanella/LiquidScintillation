@@ -5,6 +5,7 @@ var french = {
     "Input files": "Dossiers données",
     "Calculate": "Calculer",
     "Isotope": "Isotope",
+    "Other": "Autre",
     "Back": "Retour",
     "Region A": "Région A",
     "Region B": "Région B",
