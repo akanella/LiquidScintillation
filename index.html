@@ -9,12 +9,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/translation.js"></script>
     <link rel="icon" href="vial.png" sizes="16x16" type="image/png">
-    <style>
-        .manualinput,
-        .fileinput {
-            display: none;
-        }
-    </style>
 </head>
 
 <body style="padding-bottom: 90px;">
@@ -50,7 +44,7 @@
                     <button type="button" class="btn btn-warning" id="back-btn" data-translate="Back"
                         style="display:none">Back</button>
                 </div>
-                <div class="form-group col row manualinput" style="margin-top:80px">
+                <div class="form-group col row manualinput" style="margin-top:80px;display:none">
                     <div class="form-group col">
                         <span data-translate="Isotope:">Isotope:</span>
                     </div>
@@ -74,7 +68,7 @@
 
             </div>
 
-            <div class="col-8 row text-center fileinput">
+            <div class="col-8 row text-center fileinput" style="display:none">
                 <div class="col">
                     <div class="form-group">
                         <label for="input">Input</label>
@@ -87,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="col-8 row text-center manualinput">
+            <div class="col-8 row text-center manualinput" style="display:none">
                 <div class="col-12">
                     <h4 data-translate="Sample measurment">Sample measurment</h4>
                 </div>
@@ -268,7 +262,7 @@
             $('#manualinput-btn').on('click', function () {
                 inputtype = 'manual';
                 $('#input-buttons').hide();
-                $('.manualinput').show().css("display","inherit");
+                $('.manualinput').show();
                 $('#result-tab').hide();
                 $('#calculate-buttons').show();
                 $('#back-btn').show();
@@ -282,7 +276,7 @@
             $('#fileinput-btn').on('click', function () {
                 inputtype = 'file';
                 $('#input-buttons').hide();
-                $('.fileinput').show().css("display","inherit");
+                $('.fileinput').show();
                 $('#result-tab').hide();
                 $('#calculate-buttons').show();
                 $('#back-btn').show();
