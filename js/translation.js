@@ -18,7 +18,7 @@ var french = {
     "Reset": "Réinitialiser",
     "Activity:": "Activité:",
     "Background": "Bruit de fond",
-    "Last efficiency calibaration: 2018": "Dernier étalonage d'efficacité: 2018",
+    "Last efficiency calibaration:": "Dernier étalonage d'efficacité:",
     " of ": " de ",
     "unidentified isotope": "isotope non identifié",
     " of <sup>3</sup>H": " de <sup>3</sup>H",

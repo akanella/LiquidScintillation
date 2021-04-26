@@ -15,7 +15,7 @@
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 0.50-vi</span>
+            <span>v. 0.50-vii</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -177,8 +177,7 @@
                     </div>
                 </div>
                 <div class="col-12 text-right">
-                    <small class="form-text text-muted" data-translate="Last efficiency calibaration: 2018">Last
-                        efficiency calibaration: 2018</small>
+                    <small class="form-text text-muted" data-translate="Last efficiency calibaration:">Last efficiency calibaration:</small><small class="form-text text-muted"> 23.04.2021</small>
                 </div>
 
             </div>
@@ -362,19 +361,19 @@
                         if ((sampleisotope == "tritium") || (sampleisotope == "auto"  && 1.2 * BCPM[i] > CCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
                             var isotope = t(' of <sup>3</sup>H')
                             var aRegion = 'B'
-                            var x3 = 3.2134E-08
-                            var x2 = -1.1461E-04
-                            var x1 = 1.5223E-01
-                            var x0 = -6.5804E+00
+                            var x3 = 7.8721e-09
+                            var x2 = -7.4607e-05
+                            var x1 = 0.13453138
+                            var x0 = -5.08731421
                             CPM = BCPM[i]
                             bkgrndCPM = bkgrndBCPM
                         } else if ((sampleisotope == "carbon") || (sampleisotope == "auto"  && CCPM[i] > BCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
                             var isotope = t(' of <sup>14</sup>C')
                             var aRegion = 'C'
-                            var x3 = 2.2397E-07
-                            var x2 = -4.3019E-04
-                            var x1 = 2.5815E-01
-                            var x0 = 4.6734E+01
+                            var x3 = 2.6028E-07
+                            var x2 = -4.9032E-04
+                            var x1 = 0.28695473
+                            var x0 = 43.0086086
                             CPM = CCPM[i]
                             bkgrndCPM = bkgrndCCPM
                         } else {
@@ -396,7 +395,6 @@
                         var actsp = act - bckgrndAct
                         actspm.push(actsp);
                         region.push(aRegion)
-
                     }
 
                     if (region.every((val, i, arr) => val === arr[0])) {
@@ -410,8 +408,6 @@
                     } else {
                         alert('Wat?')
                     }
-                    // mean = Bactspm.reduce((a, b) => a + b) / Bactspm.length
-                    // std = Math.sqrt(Bactspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / Bactspm.length)
 
                     mean = actspm.reduce((a, b) => a + b) / actspm.length
                     std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
@@ -473,6 +469,14 @@
 
                     //backgrounddata είναι τα data του background file
                     console.log(backgrounddata);
+                    var aVar = backgrounddata.indexOf("TSIE=")
+                    var bVar = backgrounddata.indexOf("CTime=")
+                    var cVar = backgrounddata.indexOf("COUNTS")
+                    var dVar = backgrounddata.indexOf("-1")
+                    var bkgrndTime = backgrounddata.slice(bVar+6, aVar-1)
+                    var bkgrndtSIE = backgrounddata.slice(aVar+5, aVar+11)
+                    var cts = backgrounddata.slice(cVar+6, dVar-2)
+                    console.log(cts)
 
                     result = 123;
 
