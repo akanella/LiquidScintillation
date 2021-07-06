@@ -15,7 +15,7 @@
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 0.50-vii</span>
+            <span>v. 0.50-viii</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -53,7 +53,7 @@
                             <option value="auto">Auto</option>
                             <option value="tritium">H-3</option>
                             <option value="carbon">C-14</option>
-                            <option value="other" data-translate="Other">Other</option>
+                            <option value="other" data-translate="Unknown">Unknown</option>
                         </select>
                     </div>
                 </div>
@@ -377,12 +377,12 @@
                             CPM = CCPM[i]
                             bkgrndCPM = bkgrndCCPM
                         } else {
-                            var isotope = t(' of unidentified isotope')
+                            var isotope = t(' of an unknown isotope (upper limit)')
                             var aRegion = 'A'
-                            var x3 = 2.2397E-07
-                            var x2 = -4.3019E-04
-                            var x1 = 2.5815E-01
-                            var x0 = 4.6734E+01
+                            var x3 = 0.
+                            var x2 = 0.
+                            var x1 = 0.
+                            var x0 = 50
                             CPM = ACPM[i]
                             bkgrndCPM = bkgrndACPM
                         }
@@ -399,7 +399,7 @@
 
                     if (region.every((val, i, arr) => val === arr[0])) {
                         if (region[0] == 'A') {
-                            var isotope = t(' of unidentified isotope')
+                            var isotope = t(' of an unknown isotope (upper limit)')
                         } else if (region[0] == 'B') {
                             var isotope = t(' of <sup>3</sup>H')
                         } else if (region[0] == 'C') {

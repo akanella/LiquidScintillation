@@ -5,7 +5,7 @@ var french = {
     "Input files": "Dossiers données",
     "Calculate": "Calculer",
     "Isotope": "Isotope",
-    "Other": "Autre",
+    "Unknown": "Inconnu",
     "Back": "Retour",
     "Region A": "Région A",
     "Region B": "Région B",
@@ -23,5 +23,5 @@ var french = {
     "unidentified isotope": "isotope non identifié",
     " of <sup>3</sup>H": " de <sup>3</sup>H",
     " of <sup>14</sup>C": " de <sup>14</sup>C",
-    " of unidentified isotope": " d'isotope non identifié",
+    " of an unknown isotope (upper limit)": " d'un isotope inconnu (limite supérieure)",
 };
