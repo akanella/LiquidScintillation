@@ -465,18 +465,21 @@
                     });
 
                     //filedata είναι array μέ τα data των αρχείων
-                    console.log(filedata);
+                    //console.log(filedata);
 
                     //backgrounddata είναι τα data του background file
-                    console.log(backgrounddata);
-                    var aVar = backgrounddata.indexOf("TSIE=")
-                    var bVar = backgrounddata.indexOf("CTime=")
-                    var cVar = backgrounddata.indexOf("COUNTS")
-                    var dVar = backgrounddata.indexOf("-1")
-                    var bkgrndTime = backgrounddata.slice(bVar+6, aVar-1)
-                    var bkgrndtSIE = backgrounddata.slice(aVar+5, aVar+11)
-                    var cts = backgrounddata.slice(cVar+6, dVar-2)
-                    console.log(cts)
+                    //console.log(backgrounddata);
+                    var aVar = backgrounddata.indexOf("TSIE=");
+                    var bVar = backgrounddata.indexOf("CTime=");
+                    var cVar = backgrounddata.indexOf("COUNTS");
+                    var dVar = backgrounddata.indexOf("-1");
+                    var bkgrndTime = parseFloat(backgrounddata.slice(bVar+6, aVar-1));
+                    var bkgrndtSIE = parseFloat(backgrounddata.slice(aVar+5, aVar+11));
+                    var cts = backgrounddata.slice(cVar+8, dVar-4);
+                    var ACPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000).reduce((a, b) => a + b, 0)/bkgrndTime;
+                    var BCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/bkgrndTime;
+                    var CCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/bkgrndTime;
+                    console.log(ACPM, BCPM, CCPM, bkgrndTime, bkgrndtSIE);
 
                     result = 123;
 
