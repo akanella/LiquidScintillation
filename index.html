@@ -351,7 +351,7 @@
                     var sampleisotope = $('#sampleisotope').val();
 
                     //Τα 8 πεδία (αυτονόητα ονόματα)
-                    console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
+                    // console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
                     var actspm = []
                     var region = []
                     for (var i in tSIE) {
@@ -361,34 +361,61 @@
                         if ((sampleisotope == "tritium") || (sampleisotope == "auto"  && 1.2 * BCPM[i] > CCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
                             var isotope = t(' of <sup>3</sup>H')
                             var aRegion = 'B'
-                            var x3 = 7.8721e-09
-                            var x2 = -7.4607e-05
-                            var x1 = 0.13453138
-                            var x0 = -5.08731421
+                            var a6 = 6.94787E-18
+                            var a5 = -2.43194E-14
+                            var a4 = 3.30243E-11
+                            var a3 = -2.14038E-08
+                            var a2 = 5.86020E-06
+                            var a1 = 5.43754E-04
+                            var a0 = -2.01864E-02
+                            // var x3 = 7.8721e-09
+                            // var x2 = -7.4607e-05
+                            // var x1 = 0.13453138
+                            // var x0 = -5.08731421
                             CPM = BCPM[i]
                             bkgrndCPM = bkgrndBCPM
                         } else if ((sampleisotope == "carbon") || (sampleisotope == "auto"  && CCPM[i] > BCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
                             var isotope = t(' of <sup>14</sup>C')
                             var aRegion = 'C'
-                            var x3 = 2.6028E-07
-                            var x2 = -4.9032E-04
-                            var x1 = 0.28695473
-                            var x0 = 43.0086086
+                            var a6 = 0.
+                            var a5 = 0.
+                            if (tSIE[i] < 300.) {
+                                var a4 = -3.26700E-10
+                                var a3 = 2.81653E-07
+                                var a2 = -9.19133E-05
+                                var a1 = 1.41420E-02
+                                var a0 = -2.34835E-02
+                            } else {
+                                var a4 = -4.31025E-13
+                                var a3 = 1.31962E-09
+                                var a2 = -1.57309E-06
+                                var a1 = 9.12555E-04
+                                var a0 = 7.38102E-01 
+                            }
+                            // var x3 = 2.6028E-07
+                            // var x2 = -4.9032E-04
+                            // var x1 = 0.28695473
+                            // var x0 = 43.0086086
                             CPM = CCPM[i]
                             bkgrndCPM = bkgrndCCPM
                         } else {
                             var isotope = t(' of an unknown isotope (upper limit)')
                             var aRegion = 'A'
-                            var x3 = 0.
-                            var x2 = 0.
-                            var x1 = 0.
-                            var x0 = 50
+                            var a6 = 0.
+                            var a5 = 0.
+                            var a4 = 0.
+                            var a3 = 0.
+                            var a2 = 0.
+                            var a1 = 0.
+                            var a0 = 50.
                             CPM = ACPM[i]
                             bkgrndCPM = bkgrndACPM
                         }
 
-                        var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
-                        var bkgrndeff = (x3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (x2 * bkgrndtSIE * bkgrndtSIE) + (x1 * bkgrndtSIE) + (x0)
+                        var eff = (a6 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a5 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a4 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a3 * tSIE[i] * tSIE[i] * tSIE[i]) + (a2 * tSIE[i] * tSIE[i]) + (a1 * tSIE[i]) + (a0)
+                        var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
+                        // var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
+                        // var bkgrndeff = (x3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (x2 * bkgrndtSIE * bkgrndtSIE) + (x1 * bkgrndtSIE) + (x0)
 
                         var act = ((CPM / 60) / (eff / 100)) / sample
                         var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
@@ -464,24 +491,96 @@
                         throw err;
                     });
 
-                    //filedata είναι array μέ τα data των αρχείων
-                    //console.log(filedata);
-
                     //backgrounddata είναι τα data του background file
-                    //console.log(backgrounddata);
                     var aVar = backgrounddata.indexOf("TSIE=");
                     var bVar = backgrounddata.indexOf("CTime=");
                     var cVar = backgrounddata.indexOf("COUNTS");
                     var dVar = backgrounddata.indexOf("-1");
                     var bkgrndTime = parseFloat(backgrounddata.slice(bVar+6, aVar-1));
                     var bkgrndtSIE = parseFloat(backgrounddata.slice(aVar+5, aVar+11));
-                    var cts = backgrounddata.slice(cVar+8, dVar-4);
-                    var ACPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000).reduce((a, b) => a + b, 0)/bkgrndTime;
-                    var BCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/bkgrndTime;
-                    var CCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/bkgrndTime;
-                    console.log(ACPM, BCPM, CCPM, bkgrndTime, bkgrndtSIE);
+                    var bkgrndcts = backgrounddata.slice(cVar+8, dVar-4);
+                    var bkgrndACPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000).reduce((a, b) => a + b, 0)/bkgrndTime;
+                    var bkgrndBCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/bkgrndTime;
+                    var bkgrndCCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/bkgrndTime;
+                    // console.log(bkgrndACPM, bkgrndBCPM, bkgrndCCPM, bkgrndTime, bkgrndtSIE);
 
-                    result = 123;
+                    //filedata είναι array μέ τα data των αρχείων
+                    var sampleisotope = $('#sampleisotope').val();
+                    var actspm = []
+                    var region = []
+                    for (var i in filedata) {
+                        var eVar = filedata[i].indexOf("TSIE=");
+                        var fVar = filedata[i].indexOf("CTime=");
+                        var gVar = filedata[i].indexOf("COUNTS");
+                        var hVar = filedata[i].indexOf("-1");
+                        var time = parseFloat(filedata[i].slice(fVar+6, eVar-1));
+                        var tSIE = parseFloat(filedata[i].slice(eVar+5, eVar+11));
+                        var cts = filedata[i].slice(gVar+8, hVar-4);
+                        var ACPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000).reduce((a, b) => a + b, 0)/time;
+                        var BCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/time;
+                        var CCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/time;
+
+                        if ((sampleisotope == "tritium") || (sampleisotope == "auto"  && 1.2 * BCPM > CCPM && 1.2 * CCPM > ACPM)) {
+                            var isotope = t(' of <sup>3</sup>H')
+                            var aRegion = 'B'
+                            var a6 = 6.94787E-18
+                            var a5 = -2.43194E-14
+                            var a4 = 3.30243E-11
+                            var a3 = -2.14038E-08
+                            var a2 = 5.86020E-06
+                            var a1 = 5.43754E-04
+                            var a0 = -2.01864E-02
+                            CPM = BCPM
+                            bkgrndCPM = bkgrndBCPM
+                        } else if ((sampleisotope == "carbon") || (sampleisotope == "auto"  && CCPM > BCPM && 1.2 * CCPM > ACPM)) {
+                            var isotope = t(' of <sup>14</sup>C')
+                            var aRegion = 'C'
+                            var a6 = 0.
+                            var a5 = 0.
+                            if (tSIE < 300.) {
+                                var a4 = -3.26700E-10
+                                var a3 = 2.81653E-07
+                                var a2 = -9.19133E-05
+                                var a1 = 1.41420E-02
+                                var a0 = -2.34835E-02
+                            } else {
+                                var a4 = -4.31025E-13
+                                var a3 = 1.31962E-09
+                                var a2 = -1.57309E-06
+                                var a1 = 9.12555E-04
+                                var a0 = 7.38102E-01 
+                            }
+                            CPM = CCPM
+                            bkgrndCPM = bkgrndCCPM
+                        } else {
+                            var isotope = t(' of an unknown isotope (upper limit)')
+                            var aRegion = 'A'
+                            var a6 = 0.
+                            var a5 = 0.
+                            var a4 = 0.
+                            var a3 = 0.
+                            var a2 = 0.
+                            var a1 = 0.
+                            var a0 = 50.
+                            CPM = ACPM
+                            bkgrndCPM = bkgrndACPM
+                        }
+
+                        var eff = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
+                        var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
+
+                        console.log(sample, tSIE, CPM, bkgrndCPM, eff, bkgrndeff)
+                        var act = ((CPM / 60) / (eff / 100)) / sample
+                        var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
+                        var actsp = act - bckgrndAct
+                        actspm.push(actsp);
+                        region.push(aRegion)
+                    }
+
+                    mean = actspm.reduce((a, b) => a + b) / actspm.length
+                    std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
+
+                    result = mean + ' &pm; ' + std;
 
                 } else {
                     alert('Wat?');
