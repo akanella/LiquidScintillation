@@ -351,7 +351,6 @@
                     var sampleisotope = $('#sampleisotope').val();
 
                     //Τα 8 πεδία (αυτονόητα ονόματα)
-                    // console.log(tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
                     var actspm = []
                     var region = []
                     for (var i in tSIE) {
@@ -368,10 +367,6 @@
                             var a2 = 5.86020E-06
                             var a1 = 5.43754E-04
                             var a0 = -2.01864E-02
-                            // var x3 = 7.8721e-09
-                            // var x2 = -7.4607e-05
-                            // var x1 = 0.13453138
-                            // var x0 = -5.08731421
                             CPM = BCPM[i]
                             bkgrndCPM = bkgrndBCPM
                         } else if ((sampleisotope == "carbon") || (sampleisotope == "auto"  && CCPM[i] > BCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
@@ -392,10 +387,6 @@
                                 var a1 = 9.12555E-04
                                 var a0 = 7.38102E-01 
                             }
-                            // var x3 = 2.6028E-07
-                            // var x2 = -4.9032E-04
-                            // var x1 = 0.28695473
-                            // var x0 = 43.0086086
                             CPM = CCPM[i]
                             bkgrndCPM = bkgrndCCPM
                         } else {
@@ -415,8 +406,6 @@
                         console.log(a0, a1, a2, a3, a4, a5, a6)
                         var eff = (a6 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a5 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a4 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a3 * tSIE[i] * tSIE[i] * tSIE[i]) + (a2 * tSIE[i] * tSIE[i]) + (a1 * tSIE[i]) + (a0)
                         var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
-                        // var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
-                        // var bkgrndeff = (x3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (x2 * bkgrndtSIE * bkgrndtSIE) + (x1 * bkgrndtSIE) + (x0)
 
                         var act = ((CPM / 60) / (eff / 100)) / sample
                         var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
