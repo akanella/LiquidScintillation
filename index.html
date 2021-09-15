@@ -15,12 +15,14 @@
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 0.50-viii</span>
+            <span>v. 1.0-i</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
             <span> | </span>
             <span style="cursor:pointer" class="languages" data-lang="fr"> fr </span>
+<!--             <span> | </span>
+            <span style="cursor:pointer" class="languages" data-lang="de"> de </span> -->
         </div>
     </div>
     <form id="LiquidScintillation">
@@ -44,7 +46,7 @@
                     <button type="button" class="btn btn-warning" id="back-btn" data-translate="Back"
                         style="display:none">Back</button>
                 </div>
-                <div class="form-group col row manualinput" style="margin-top:80px;display:none">
+                <div class="form-group col row manualinput fileinput" style="margin-top:80px;display:none">
                     <div class="form-group col">
                         <span data-translate="Isotope:">Isotope:</span>
                     </div>
@@ -225,6 +227,10 @@
                         if (french[value]) {
                             return french[value];
                         }
+                    // case 'de':
+                    //     if (german[value]) {
+                    //         return german[value];
+                    //     }
                     default:
                         return value;
                 }

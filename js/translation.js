@@ -25,3 +25,8 @@ var french = {
     " of <sup>14</sup>C": " de <sup>14</sup>C",
     " of an unknown isotope (upper limit)": " d'un isotope inconnu (limite supérieure)",
 };
+
+// var german = {
+//     "Manual input": "Données manuelles",
+//     "Input files": "Dossiers données",
+// }
