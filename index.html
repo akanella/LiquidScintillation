@@ -412,6 +412,7 @@
                             bkgrndCPM = bkgrndACPM
                         }
 
+                        console.log(a0, a1, a2, a3, a4, a5, a6)
                         var eff = (a6 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a5 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a4 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a3 * tSIE[i] * tSIE[i] * tSIE[i]) + (a2 * tSIE[i] * tSIE[i]) + (a1 * tSIE[i]) + (a0)
                         var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
                         // var eff = (x3 * tSIE[i] * tSIE[i] * tSIE[i]) + (x2 * tSIE[i] * tSIE[i]) + (x1 * tSIE[i]) + (x0)
@@ -502,7 +503,6 @@
                     var bkgrndACPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000).reduce((a, b) => a + b, 0)/bkgrndTime;
                     var bkgrndBCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/bkgrndTime;
                     var bkgrndCCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/bkgrndTime;
-                    // console.log(bkgrndACPM, bkgrndBCPM, bkgrndCCPM, bkgrndTime, bkgrndtSIE);
 
                     //filedata είναι array μέ τα data των αρχείων
                     var sampleisotope = $('#sampleisotope').val();
