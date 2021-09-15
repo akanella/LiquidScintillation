@@ -15,14 +15,14 @@
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 1.0-i</span>
+            <span>v. 1.0-ii</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
             <span> | </span>
             <span style="cursor:pointer" class="languages" data-lang="fr"> fr </span>
-<!--             <span> | </span>
-            <span style="cursor:pointer" class="languages" data-lang="de"> de </span> -->
+            <span> | </span>
+            <span style="cursor:pointer" class="languages" data-lang="de"> de </span>
         </div>
     </div>
     <form id="LiquidScintillation">
@@ -73,11 +73,11 @@
             <div class="col-8 row text-center fileinput" style="display:none">
                 <div class="col">
                     <div class="form-group">
-                        <label for="input">Input</label>
+                        <label for="input" data-translate="Sample files">Sample files</label>
                         <input type="file" id="fileinput" class="form-control" multiple>
                     </div>
                     <div class="form-group">
-                        <label for="background">Background</label>
+                        <label for="background" data-translate="Background file">Background file</label>
                         <input type="file" id="backgroundfile" class="form-control">
                     </div>
                 </div>
@@ -85,7 +85,7 @@
 
             <div class="col-8 row text-center manualinput" style="display:none">
                 <div class="col-12">
-                    <h4 data-translate="Sample measurment">Sample measurment</h4>
+                    <h4 data-translate="Sample measurement">Sample measurement</h4>
                 </div>
                 <div class="col row">
                     <div class="col-12 ">
@@ -227,10 +227,10 @@
                         if (french[value]) {
                             return french[value];
                         }
-                    // case 'de':
-                    //     if (german[value]) {
-                    //         return german[value];
-                    //     }
+                    case 'de':
+                        if (german[value]) {
+                            return german[value];
+                        }
                     default:
                         return value;
                 }
