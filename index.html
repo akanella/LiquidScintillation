@@ -477,7 +477,7 @@ td, th {
                         return new Promise((resolve, reject) => {
                             let reader = new FileReader();
                             reader.onload = function () {
-                                resolve(reader.result);
+                                resolve({data: reader.result, name: data.name});
                             };
                             reader.onerror = function () {
                                 reject(reader.error);
@@ -524,14 +524,15 @@ td, th {
                     var sampleisotope = $('#sampleisotope').val();
                     var actspm = []
                     var region = []
+					
                     for (var i in filedata) {
-                        var eVar = filedata[i].indexOf("TSIE=");
-                        var fVar = filedata[i].indexOf("CTime=");
-                        var gVar = filedata[i].indexOf("COUNTS");
-                        var hVar = filedata[i].indexOf("-1");
-                        var time = parseFloat(filedata[i].slice(fVar+6, eVar-1));
-                        var tSIE = parseFloat(filedata[i].slice(eVar+5, eVar+11));
-                        var cts = filedata[i].slice(gVar+8, hVar-4);
+                        var eVar = filedata[i].data.indexOf("TSIE=");
+                        var fVar = filedata[i].data.indexOf("CTime=");
+                        var gVar = filedata[i].data.indexOf("COUNTS");
+                        var hVar = filedata[i].data.indexOf("-1");
+                        var time = parseFloat(filedata[i].data.slice(fVar+6, eVar-1));
+                        var tSIE = parseFloat(filedata[i].data.slice(eVar+5, eVar+11));
+                        var cts = filedata[i].data.slice(gVar+8, hVar-4);
                         var ACPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000).reduce((a, b) => a + b, 0)/time;
                         var BCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/time;
                         var CCPM = cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/time;
