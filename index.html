@@ -11,6 +11,22 @@
     <link rel="icon" href="vial.png" sizes="16x16" type="image/png">
 </head>
 
+
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+</style>
+
 <body style="padding-bottom: 90px;">
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
@@ -200,6 +216,7 @@
                 <div class="col-12 form-group" id="result-tab" style="display:none">
                     <h6>&nbsp;</h6>
                     <label for="result" data-translate="Activity:">Activity:</label>
+                    <div id="extraResults"></div>
                     <div id="result" class="alert alert-success"></div>
                 </div>
             </div>
@@ -332,6 +349,7 @@
                 //sampleunit είναι το unit του sample
                 var sampleunit = $('#sampleunit').val();
                 var result = null;
+				var extraResults = [];
 
                 if (inputtype === 'manual') {
 
@@ -579,11 +597,20 @@
                     std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
 
                     result = mean + ' &pm; ' + std;
+					extraResults.push([1,'testA','testB','testC'])
+					extraResults.push([1,'testA1','testB1','testC1'])
 
                 } else {
                     alert('Wat?');
                 }
-
+	
+				if(extraResults.length>0){
+					let table = extraResults.reduce((html, results) => html+results.reduce((tr,result) => tr+'<td>'+result+'</td>','<tr>')+'</tr>','<table><thead><th>'+t('tSIE')+'</th><th>'+t('Region A')+'</th><th>'+t('Region B')+'</th><th>'+t('Region C')+'</th></thead>')+'</tbody></table>';
+					$('#extraResults').html(table);
+				}else{
+					$('#extraResults').html('');
+				}
+				
                 $('#result').html('A = ' + result + ' Bq/' + sampleunit + isotope);
                 $('#result-tab').show();
 
