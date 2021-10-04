@@ -18,6 +18,7 @@ var french = {
     "Reset": "Réinitialiser",
     "Activity:": "Activité:",
     "Background": "Bruit de fond",
+    "File": "Dossier",
     "Last efficiency calibaration:": "Dernier étalonage d'efficacité:",
     " of ": " de ",
     "unidentified isotope": "isotope non identifié",
@@ -48,6 +49,7 @@ var german = {
     "Reset": "Zurücksetzen",
     "Activity:": "Aktivität:",
     "Background": "Hintergrund",
+    "File": "Datei",
     "Last efficiency calibaration:": "Letzte Effizienzkalibrierung:",
     " of ": " von ",
     "unidentified isotope": "nicht identifiziertes Isotop",
@@ -55,5 +57,5 @@ var german = {
     " of <sup>14</sup>C": " von <sup>14</sup>C",
     " of an unknown isotope (upper limit)": " von ein unbekanntes Isotop (obere Grenze)",
     "Sample files": "Beispieldateien",
-    "Background file": "Hintergrunddateien",
+    "Background file": "Hintergrunddatei",
 }

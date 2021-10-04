@@ -31,7 +31,7 @@ td, th {
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 1.0-iii</span>
+            <span>v. 1.2-i</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -592,21 +592,21 @@ td, th {
                         var actsp = act - bckgrndAct
                         actspm.push(actsp);
                         region.push(aRegion)
-                        extraResults.push([tSIE,ACPM, BCPM, CCPM])
+                        extraResults.push([filedata[i].name,tSIE,ACPM, BCPM, CCPM])
                     }
 
                     mean = actspm.reduce((a, b) => a + b) / actspm.length
                     std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
 
                     result = mean + ' &pm; ' + std;
-                    extraResults.push([bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
+                    extraResults.push([t('Background'), bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
 
                 } else {
                     alert('Wat?');
                 }
 	
 				if(extraResults.length>0){
-					let table = extraResults.reduce((html, results) => html+results.reduce((tr,result) => tr+'<td>'+result+'</td>','<tr>')+'</tr>','<table><thead><th>'+t('tSIE')+'</th><th>'+t('Region A')+'</th><th>'+t('Region B')+'</th><th>'+t('Region C')+'</th></thead>')+'</tbody></table>';
+					let table = extraResults.reduce((html, results) => html+results.reduce((tr,result) => tr+'<td>'+result+'</td>','<tr>')+'</tr>','<table><thead><th>'+t('File')+'</th><th>'+t('tSIE')+'</th><th>'+t('Region A')+'</th><th>'+t('Region B')+'</th><th>'+t('Region C')+'</th></thead>')+'</tbody></table>';
 					$('#extraResults').html(table);
 				}else{
 					$('#extraResults').html('');
