@@ -592,14 +592,14 @@ td, th {
                         var actsp = act - bckgrndAct
                         actspm.push(actsp);
                         region.push(aRegion)
+                        extraResults.push([tSIE,ACPM, BCPM, CCPM])
                     }
 
                     mean = actspm.reduce((a, b) => a + b) / actspm.length
                     std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
 
                     result = mean + ' &pm; ' + std;
-					extraResults.push([1,'testA','testB','testC'])
-					extraResults.push([1,'testA1','testB1','testC1'])
+                    extraResults.push([bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
 
                 } else {
                     alert('Wat?');
