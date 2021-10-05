@@ -216,16 +216,19 @@ td, th {
                 </div>
                 <div class="col-12 form-group" id="result-tab" style="display:none">
                     <h6>&nbsp;</h6>
-                    <label for="result" data-translate="Activity:">Activity:</label>
+                    <label for="result" data-translate="Files Information:">Files information:</label>
                     <div id="extraResults"></div>
+                    <label for="result"><br></br></label>
+                    <label for="result" data-translate="Activity:">Activity:</label>
                     <div id="result" class="alert alert-success"></div>
+                </div>
+                <div class="col-12 form-group" style="width:50%">
+                    <canvas id="result-graph" width="16" height="9"></canvas>
                 </div>
             </div>
         </div>
     </form>
-	<div class="col-12" >
-		<canvas id="result-graph" width="400" height="400"></canvas>
-	</div>
+
     <div class="row col-12"
         style="position:fixed; bottom:0px; text-align: left; width:100%; background:white; height: 70px">
         <div class="col-10">
@@ -485,7 +488,6 @@ td, th {
                             bkgrndCPM = bkgrndACPM
                         }
 
-                        console.log(a0, a1, a2, a3, a4, a5, a6)
                         var eff = (a6 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a5 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a4 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a3 * tSIE[i] * tSIE[i] * tSIE[i]) + (a2 * tSIE[i] * tSIE[i]) + (a1 * tSIE[i]) + (a0)
                         var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
 
@@ -667,13 +669,13 @@ td, th {
                 }
 	
 				if(extraResults.length>0){
-					let table = extraResults.reduce((html, results) => html+results.reduce((tr,result) => tr+'<td>'+result+'</td>','<tr>')+'</tr>','<table><thead><th>'+t('File')+'</th><th>'+t('tSIE')+'</th><th>'+t('Region A')+'</th><th>'+t('Region B')+'</th><th>'+t('Region C')+'</th></thead>')+'</tbody></table>';
+					let table = extraResults.reduce((html, results) => html+results.reduce((tr,result) => tr+'<td>'+result+'</td>','<tr>')+'</tr>','<table><thead><th>'+t('File')+'</th><th>'+t('tSIE')+'</th><th>'+'CPM - '+t('Region A')+'</th><th>'+'CPM - '+t('Region B')+'</th><th>'+'CPM - '+t('Region C')+'</th></thead>')+'</tbody></table>';
 					$('#extraResults').html(table);
 				}else{
 					$('#extraResults').html('');
 				}
 				
-                $('#result').html('A = ' + result + ' Bq/' + sampleunit + isotope);
+                $('#result').html('a = ' + result + ' Bq/' + sampleunit + isotope);
                 $('#result-tab').show();
 
             })

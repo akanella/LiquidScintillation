@@ -2,7 +2,7 @@ var french = {
     "Sample quantity":"Quantité d'échantillon",
     "No sample quantity":"Aucune quantité d'échantillon",
     "Manual input": "Données manuelles",
-    "Input files": "Dossiers données",
+    "Input files": "Fichiers données",
     "Calculate": "Calculer",
     "Isotope:": "Isotope:",
     "Unknown": "Inconnu",
@@ -18,15 +18,16 @@ var french = {
     "Reset": "Réinitialiser",
     "Activity:": "Activité:",
     "Background": "Bruit de fond",
-    "File": "Dossier",
+    "File": "Fichier",
     "Last efficiency calibaration:": "Dernier étalonage d'efficacité:",
     " of ": " de ",
     "unidentified isotope": "isotope non identifié",
     " of <sup>3</sup>H": " de <sup>3</sup>H",
     " of <sup>14</sup>C": " de <sup>14</sup>C",
     " of an unknown isotope (upper limit)": " d'un isotope inconnu (limite supérieure)",
-    "Sample files": "Dossiers d'échantillon",
-    "Background file": "Dossier de bruit de fond",
+    "Sample files": "Fichiers d'échantillon",
+    "Background file": "Fichier de bruit de fond",
+    "Files Information:": "Renseignement sur les fichiers:",
 };
 
 var german = {
@@ -58,4 +59,5 @@ var german = {
     " of an unknown isotope (upper limit)": " von ein unbekanntes Isotop (obere Grenze)",
     "Sample files": "Beispieldateien",
     "Background file": "Hintergrunddatei",
+    "Files Information:": "Dateiinformationen:",
 }
