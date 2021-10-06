@@ -20,6 +20,7 @@ var french = {
     "Background": "Bruit de fond",
     "Energy": "Énergie",
     "File": "Fichier",
+    "Spectra:": "Spectres:",
     "Last efficiency calibaration:": "Dernier étalonage d'efficacité:",
     " of ": " de ",
     "unidentified isotope": "isotope non identifié",
@@ -29,6 +30,7 @@ var french = {
     "Sample files": "Fichiers d'échantillon",
     "Background file": "Fichier de bruit de fond",
     "Files Information:": "Renseignement sur les fichiers:",
+    "Calculate and plot": "Calcurer et tracer"
 };
 
 var german = {
@@ -53,6 +55,7 @@ var german = {
     "Background": "Hintergrund",
     "Energy": "Energie",
     "File": "Datei",
+    "Spectra:": "Spektren:",
     "Last efficiency calibaration:": "Letzte Effizienzkalibrierung:",
     " of ": " von ",
     "unidentified isotope": "nicht identifiziertes Isotop",
@@ -62,4 +65,5 @@ var german = {
     "Sample files": "Beispieldateien",
     "Background file": "Hintergrunddatei",
     "Files Information:": "Dateiinformationen:",
+    "Calculate and plot": "Berechen und zeichen"
 }
