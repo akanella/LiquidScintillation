@@ -222,7 +222,7 @@ td, th {
                     <label for="result" data-translate="Activity:">Activity:</label>
                     <div id="result" class="alert alert-success"></div>
                 </div>
-                <div class="col-12 form-group" style="width:50%">
+                <div class="col-12 form-group">
                     <canvas id="result-graph" width="16" height="9"></canvas>
                 </div>
             </div>
@@ -304,7 +304,8 @@ td, th {
 								beginAtZero: true
 							},
 							x: {
-								beginAtZero: true
+								beginAtZero: true,
+                                title: {display: true, text: t("Energy")+" [keV]"}
 							}
 						}
 					}
@@ -406,6 +407,7 @@ td, th {
 
                 //sampleunit είναι το unit του sample
                 var sampleunit = $('#sampleunit').val();
+                destroyGraph();
                 var result = null;
 				var extraResults = [];
 
@@ -647,7 +649,6 @@ td, th {
                         var eff = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
                         var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
 
-                        console.log(sample, tSIE, CPM, bkgrndCPM, eff, bkgrndeff)
                         var act = ((CPM / 60) / (eff / 100)) / sample
                         var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
                         var actsp = act - bckgrndAct
@@ -662,7 +663,7 @@ td, th {
                     result = mean + ' &pm; ' + std;
                     extraResults.push([t('Background'), bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
 					
-					createChart(Array.from(Array(4000).keys()),datasets);
+					createChart(Array.from(Array(4000).keys()).map(x=>x/2),datasets);
 					
                 } else {
                     alert('Wat?');
