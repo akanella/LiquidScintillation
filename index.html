@@ -204,11 +204,15 @@ td, th {
 
             </div>
 
-            <div class="row col-4 offset-4" id="calculate-buttons" style="display:none; margin-top:30px">
+            <div class="row col-8 offset-4" id="calculate-buttons" style="display:none; margin-top:30px">
                 <div class="row col-12">
                     <div>
                         <button type="button" id="calculate" class="btn btn-success"
                             data-translate="Calculate">Calculate</button>
+                    </div>
+					<div class="offset-1 fileinput">
+                        <button type="button" id="calculate-plot" class="btn btn-success"
+                            data-translate="Calculate and plot">Calculate and plot</button>
                     </div>
                     <div class="offset-1">
                         <input type="reset" id="reset-btn" value="Reset" class="btn btn-danger" data-translate="Reset">
@@ -221,9 +225,15 @@ td, th {
                     <label for="result"><br></br></label>
                     <label for="result" data-translate="Activity:">Activity:</label>
                     <div id="result" class="alert alert-success"></div>
-                </div>
-                <div class="col-12 form-group">
-                    <canvas id="result-graph" width="16" height="9"></canvas>
+					<div class="col-12 form-group" id="graph" style="display:none">
+						<canvas id="result-graph"></canvas>
+						<button type="button" class="btn btn-success change-range" data-range="4000"
+								data-translate="Region A">Region A</button>
+						<button type="button" class="btn btn-success change-range" data-range="40" 
+						data-translate="Region B">Region B</button>
+						<button type="button" class="btn btn-success change-range" data-range="360"
+						data-translate="Region C">Region C</button>
+					</div>
                 </div>
             </div>
         </div>
@@ -265,51 +275,64 @@ td, th {
 			
 			function destroyGraph(){
 				if(myChart){
+					$('#graph').hide();
 					myChart.destroy();
 					myChart = null;
 				}
 			}
 			
-			function createChart(labels, filedata){
-				var ctx = $('#result-graph');
-				
-				let datasets = filedata.map(data => {
-					const randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
-					return {
-						label: data.label,
-						data: data.data,
-						borderColor: randomColor,
-						backgroundColor: randomColor+"80"
-					};
-				});
-				myChart = new Chart(ctx, {
-					type: 'line',
-					responsive: true,
-					data: {
-						labels: labels,
-						datasets: datasets
-					},
-					plugins: {
-					  legend: {
-						position: 'top',
-					  },
-					  title: {
-						display: true,
-						text: t('Liquid Scintillation')
-					  }
-					},
-					options: {
-						scales: {
-							y: {
-								beginAtZero: true
-							},
-							x: {
-								beginAtZero: true,
-                                title: {display: true, text: t("Energy")+" [keV]"}
+			function createChart(labels, filedata = []){
+				if(myChart){
+					myChart.data.labels = labels;
+					myChart.update();
+				} else {
+					$('#graph').show();
+					var ctx = $('#result-graph');
+					
+					let datasets = filedata.map(data => {
+						const randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+						return {
+							label: data.label,
+							data: data.data,
+							borderColor: randomColor,
+							backgroundColor: randomColor+"80"
+						};
+					});
+					myChart = new Chart(ctx, {
+						type: 'line',
+						responsive: true,
+						data: {
+							labels: labels,
+							datasets: datasets
+						},
+						plugins: {
+						  legend: {
+							position: 'top',
+						  },
+						  title: {
+							display: true,
+							text: t('Liquid Scintillation')
+						  }
+						},
+						options: {
+							scales: {
+								y: {
+									beginAtZero: true,
+									grid: {
+											display:false
+										}
+								},
+								x: {
+									beginAtZero: true,
+									title: {display: true, text: t("Energy")+" [keV]"},
+									grid: {
+											display:false
+										}
+								}
 							}
 						}
-					}
-				});
+					});
+				}
 			}
 
             function translate() {
@@ -337,6 +360,10 @@ td, th {
                 if (typeof (Storage) !== "undefined") {
                     localStorage.setItem("language", lang);
                 }
+            })
+			
+			$('.change-range').on('click', function () {
+                createChart(Array.from(Array($(this).data('range')).keys()).map(x=>x/2));
             })
 
             var inputtype = null;
@@ -392,8 +419,12 @@ td, th {
                 $("input[name='BCPM[]']").last().remove();
                 $("input[name='CCPM[]']").last().remove();
             })
+			
+			$('#calculate-plot').on('click', function(){
+				$('#calculate').trigger('click', ['plot']);
+			})
 
-            $('#calculate').on('click', async function () {
+            $('#calculate').on('click', async function (event, arg1) {
                 $('.is-invalid').removeClass('is-invalid');
 
                 if (!$('#sample').val()) {
@@ -663,7 +694,9 @@ td, th {
                     result = mean + ' &pm; ' + std;
                     extraResults.push([t('Background'), bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
 					
-					createChart(Array.from(Array(4000).keys()).map(x=>x/2),datasets);
+					if(arg1 == 'plot'){
+						createChart(Array.from(Array(4000).keys()).map(x=>x/2),datasets);
+					}
 					
                 } else {
                     alert('Wat?');
