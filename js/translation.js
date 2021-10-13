@@ -11,7 +11,7 @@ var french = {
     "Region B": "Région B",
     "Region C": "Région C",
     "Empty field": "Champ vide",
-    "Liquid Scintillation Activity Calculator": "Calculateur d'activité de scintillation liquide",
+    "Liquid Scintillation Activity Calculator": "Calculatrice d'activité de scintillation liquide",
     "Liquid Scintillation": "Scintillation liquide",
     "Sample measurement": "Mésure d'échantillon",
     "Full Range Spectrum": "Spectre complet",
