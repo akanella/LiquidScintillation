@@ -347,6 +347,153 @@ td, th {
                 })
             }
 
+            function efficiencyFactors(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM) {
+
+                if ((sampleIsotope == "tritium") || (sampleIsotope == "auto"  && 1.2 * BCPM > CCPM && 1.2 * CCPM > ACPM)) {
+                    var aRegion = 'B'
+                    var a6 = 6.94787E-18
+                    var a5 = -2.43194E-14
+                    var a4 = 3.30243E-11
+                    var a3 = -2.14038E-08
+                    var a2 = 5.86020E-06
+                    var a1 = 5.43754E-04
+                    var a0 = -2.01864E-02
+                    CPM = BCPM
+                    bkgrndCPM = bkgrndBCPM
+                } else if ((sampleIsotope == "carbon") || (sampleIsotope == "auto"  && CCPM > BCPM && 1.2 * CCPM > ACPM)) {
+                    var aRegion = 'C'
+                    var a6 = 0.
+                    var a5 = 0.
+                    if (tSIE[i] < 300.) {
+                        var a4 = -3.26700E-10
+                        var a3 = 2.81653E-07
+                        var a2 = -9.19133E-05
+                        var a1 = 1.41420E-02
+                        var a0 = -2.34835E-02
+                    } else {
+                        var a4 = -4.31025E-13
+                        var a3 = 1.31962E-09
+                        var a2 = -1.57309E-06
+                        var a1 = 9.12555E-04
+                        var a0 = 7.38102E-01 
+                    }
+                    CPM = CCPM
+                    bkgrndCPM = bkgrndCCPM
+                } else {
+                    var aRegion = 'A'
+                    var a6 = 0.
+                    var a5 = 0.
+                    var a4 = 0.
+                    var a3 = 0.
+                    var a2 = 0.
+                    var a1 = 0.
+                    var a0 = 50.
+                    CPM = ACPM
+                    bkgrndCPM = bkgrndACPM
+                }
+                // console.log(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM)
+                // console.log(a6,a5,a4,a3,a2,a1,a0,CPM,bkgrndCPM,aRegion)
+                return {
+                    a6,
+                    a5,
+                    a4,
+                    a3,
+                    a2,
+                    a1,
+                    a0,
+                    CPM,
+                    bkgrndCPM,
+                    aRegion
+                };
+
+            }
+
+            function calculateEfficiency(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE) {
+                // console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
+                var efficiency = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
+                var bkgrndEfficiency = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
+
+                return {
+
+                    efficiency,
+                    bkgrndEfficiency
+
+                };
+
+            }
+
+            function calculateSpecificAcitivy(sample, time, CPM, efficiency, bkgrndCPM, bkgrndEfficiency) {
+                // console.log(sample, CPM, efficiency, bkgrndCPM, bkgrndEfficiency)
+                var activityVal = ((CPM / 60) / (efficiency / 100)) / sample
+                var activityUnc = ((Math.pow(CPM*time,0.5) / (time*60)) / (efficiency / 100)) / sample
+
+                var bckgrndActivityVal = ((bkgrndCPM / 60) / (bkgrndEfficiency / 100))
+                var bckgrndActivityUnc = ((Math.pow(CPM*time,0.5) / (time*60)) / (bkgrndEfficiency / 100))
+
+                var specificActivityVal = activityVal - bckgrndActivityVal
+                var aCalculation = Math.pow(activityUnc,2) + Math.pow(bckgrndActivityUnc,2)
+                var specificActivityUnc = Math.pow(aCalculation,0.5)
+                // console.log(specificActivityVal, specificActivityUnc)
+                return {
+
+                    specificActivityVal,
+                    specificActivityUnc
+
+                };
+
+            }
+
+            function calculateMean(valAr, uncAr) {
+
+                if (valAr.length == 1) {
+
+                    var meanValue = valAr[0]
+                    var meanSigma = uncAr[0]
+
+                }else{
+
+                    var numeratorMean = 0.
+                    var denominatorMean = 0.
+                    var numeratorSigmaScat = 0.
+
+                    for (var i in valAr) {
+                    
+                        numeratorMean += valAr[i]/Math.pow(uncAr[i],2)
+                        denominatorMean += 1/Math.pow(uncAr[i],2)
+
+                    }
+
+                    var meanWeight = numeratorMean/denominatorMean;
+                    var sigmaStatSq = 1/denominatorMean;
+
+                    for (var i in valAr) {
+
+                        numeratorSigmaScat += Math.pow((valAr[i]-meanWeight)/uncAr[i],2)
+
+                    }
+
+                    var sigmaScatSq = numeratorSigmaScat/((valAr.length-1)*denominatorMean)
+
+                    if (sigmaStatSq>sigmaScatSq){
+                        var meanWeightSigma = Math.pow(sigmaStatSq,0.5)
+                    } else {
+                        var meanWeightSigma = Math.pow(sigmaScatSq,0.5)
+                    }
+
+                    var meanValue = meanWeight
+                    var meanSigma = meanWeightSigma
+
+                }
+
+                return {
+
+                    meanValue,
+                    meanSigma
+
+                };
+
+            }
+
             if (typeof (Storage) !== "undefined") {
                 let storedlang = localStorage.getItem("language");
                 if (storedlang) {
@@ -457,7 +604,6 @@ td, th {
                         return false;
                     }
 
-                    //Arrays με τις τιμές του κάθε κουτιού
                     var tSIE = $("input[name='tSIE[]']").map(function () { return parseFloat($(this).val()); }).get();
                     var ACPM = $("input[name='ACPM[]']").map(function () { return parseFloat($(this).val()); }).get();
                     var BCPM = $("input[name='BCPM[]']").map(function () { return parseFloat($(this).val()); }).get();
@@ -469,67 +615,24 @@ td, th {
                     var bkgrndCCPM = parseFloat($('#bkgrndCCPM').val());
                     var sampleisotope = $('#sampleisotope').val();
 
-                    //Τα 8 πεδία (αυτονόητα ονόματα)
-                    var actspm = []
+                    var listActVal = []
+                    var listActUnc = []
                     var region = []
                     for (var i in tSIE) {
                         ACPMPE = ACPM[i] / 2000
                         BCPMPE = BCPM[i] / 18.6
                         CCPMPE = CCPM[i] / 156
-                        if ((sampleisotope == "tritium") || (sampleisotope == "auto"  && 1.2 * BCPM[i] > CCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
-                            var isotope = t(' of <sup>3</sup>H')
-                            var aRegion = 'B'
-                            var a6 = 6.94787E-18
-                            var a5 = -2.43194E-14
-                            var a4 = 3.30243E-11
-                            var a3 = -2.14038E-08
-                            var a2 = 5.86020E-06
-                            var a1 = 5.43754E-04
-                            var a0 = -2.01864E-02
-                            CPM = BCPM[i]
-                            bkgrndCPM = bkgrndBCPM
-                        } else if ((sampleisotope == "carbon") || (sampleisotope == "auto"  && CCPM[i] > BCPM[i] && 1.2 * CCPM[i] > ACPM[i])) {
-                            var isotope = t(' of <sup>14</sup>C')
-                            var aRegion = 'C'
-                            var a6 = 0.
-                            var a5 = 0.
-                            if (tSIE[i] < 300.) {
-                                var a4 = -3.26700E-10
-                                var a3 = 2.81653E-07
-                                var a2 = -9.19133E-05
-                                var a1 = 1.41420E-02
-                                var a0 = -2.34835E-02
-                            } else {
-                                var a4 = -4.31025E-13
-                                var a3 = 1.31962E-09
-                                var a2 = -1.57309E-06
-                                var a1 = 9.12555E-04
-                                var a0 = 7.38102E-01 
-                            }
-                            CPM = CCPM[i]
-                            bkgrndCPM = bkgrndCCPM
-                        } else {
-                            var isotope = t(' of an unknown isotope (upper limit)')
-                            var aRegion = 'A'
-                            var a6 = 0.
-                            var a5 = 0.
-                            var a4 = 0.
-                            var a3 = 0.
-                            var a2 = 0.
-                            var a1 = 0.
-                            var a0 = 50.
-                            CPM = ACPM[i]
-                            bkgrndCPM = bkgrndACPM
-                        }
 
-                        var eff = (a6 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a5 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a4 * tSIE[i] * tSIE[i] * tSIE[i] * tSIE[i]) + (a3 * tSIE[i] * tSIE[i] * tSIE[i]) + (a2 * tSIE[i] * tSIE[i]) + (a1 * tSIE[i]) + (a0)
-                        var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
+                        factors = efficiencyFactors(sampleisotope, tSIE[i], ACPM[i], BCPM[i], CCPM[i], bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
-                        var act = ((CPM / 60) / (eff / 100)) / sample
-                        var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
-                        var actsp = act - bckgrndAct
-                        actspm.push(actsp);
-                        region.push(aRegion)
+                        efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE[i], bkgrndtSIE)
+
+                        activity = calculateSpecificAcitivy(sample, 1, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
+
+                        listActVal.push(activity.specificActivityVal);
+                        listActUnc.push(activity.specificActivityUnc);
+                        region.push(factors.aRegion);
+
                     }
 
                     if (region.every((val, i, arr) => val === arr[0])) {
@@ -544,10 +647,9 @@ td, th {
                         alert('Wat?')
                     }
 
-                    mean = actspm.reduce((a, b) => a + b) / actspm.length
-                    std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
+                    mean = calculateMean(listActVal, listActUnc)
 
-                    result = mean + ' &pm; ' + std;
+                    result = mean.meanValue + ' &pm; ' + mean.meanSigma;
 
                 } else if (inputtype === 'file') {
 
@@ -632,67 +734,22 @@ td, th {
 						
 						datasets.push({label: filedata[i].name, data: cts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000)})
 
-                        if ((sampleisotope == "tritium") || (sampleisotope == "auto"  && 1.2 * BCPM > CCPM && 1.2 * CCPM > ACPM)) {
-                            var isotope = t(' of <sup>3</sup>H')
-                            var aRegion = 'B'
-                            var a6 = 6.94787E-18
-                            var a5 = -2.43194E-14
-                            var a4 = 3.30243E-11
-                            var a3 = -2.14038E-08
-                            var a2 = 5.86020E-06
-                            var a1 = 5.43754E-04
-                            var a0 = -2.01864E-02
-                            CPM = BCPM
-                            bkgrndCPM = bkgrndBCPM
-                        } else if ((sampleisotope == "carbon") || (sampleisotope == "auto"  && CCPM > BCPM && 1.2 * CCPM > ACPM)) {
-                            var isotope = t(' of <sup>14</sup>C')
-                            var aRegion = 'C'
-                            var a6 = 0.
-                            var a5 = 0.
-                            if (tSIE < 300.) {
-                                var a4 = -3.26700E-10
-                                var a3 = 2.81653E-07
-                                var a2 = -9.19133E-05
-                                var a1 = 1.41420E-02
-                                var a0 = -2.34835E-02
-                            } else {
-                                var a4 = -4.31025E-13
-                                var a3 = 1.31962E-09
-                                var a2 = -1.57309E-06
-                                var a1 = 9.12555E-04
-                                var a0 = 7.38102E-01 
-                            }
-                            CPM = CCPM
-                            bkgrndCPM = bkgrndCCPM
-                        } else {
-                            var isotope = t(' of an unknown isotope (upper limit)')
-                            var aRegion = 'A'
-                            var a6 = 0.
-                            var a5 = 0.
-                            var a4 = 0.
-                            var a3 = 0.
-                            var a2 = 0.
-                            var a1 = 0.
-                            var a0 = 50.
-                            CPM = ACPM
-                            bkgrndCPM = bkgrndACPM
-                        }
+                        factors = efficiencyFactors(sampleisotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
-                        var eff = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
-                        var bkgrndeff = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
+                        efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE, bkgrndtSIE)
 
-                        var act = ((CPM / 60) / (eff / 100)) / sample
-                        var bckgrndAct = ((bkgrndCPM / 60) / (bkgrndeff / 100))
-                        var actsp = act - bckgrndAct
-                        actspm.push(actsp);
-                        region.push(aRegion)
+                        activity = calculateSpecificAcitivy(sample, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
+
+                        listActVal.push(activity.specificActivityVal);
+                        listActUnc.push(activity.specificActivityUnc);
+                        region.push(factors.aRegion);
                         extraResults.push([filedata[i].name,tSIE,ACPM, BCPM, CCPM])
                     }
 
-                    mean = actspm.reduce((a, b) => a + b) / actspm.length
-                    std = Math.sqrt(actspm.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / actspm.length)
+                    mean = calculateMean(listActVal, listActUnc)
 
-                    result = mean + ' &pm; ' + std;
+                    result = mean.meanValue + ' &pm; ' + mean.meanSigma;
+
                     extraResults.push([t('Background'), bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
 					
 					if(arg1 == 'plot'){
