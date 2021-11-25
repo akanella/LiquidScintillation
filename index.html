@@ -32,7 +32,7 @@ td, th {
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 2.0-i</span>
+            <span>v. 3.0</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -78,10 +78,10 @@ td, th {
                 </div>
 				<div class="form-group col row manualinput" style="display:none">
                     <div class="form-group col">
-                        <span data-translate="kati:">kati:</span>
+                        <span data-translate="Measurement Time (in min):">Time:</span>
                     </div>
                     <div class="form-group col">
-                        <input type="number" id="kati" class="form-control" required>
+                        <input type="number" id="time" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -617,11 +617,13 @@ td, th {
 
                 if (inputtype === 'manual') {
 				
-					if (!$('#kati').val()) {
-						$('#kati').addClass('is-invalid');
-						alert(t('No kati quantity'));
+					if (!$('#time').val()) {
+						$('#time').addClass('is-invalid');
+						alert(t('No measurement time was given'));
 						return false;
 					}
+
+                    var time = parseFloat($('#time').val());
 
                     let flag = true;
                     $('#manualinput-tab .required').each(function () {
@@ -655,7 +657,7 @@ td, th {
 
                         efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE[i], bkgrndtSIE)
 
-                        activity = calculateSpecificAcitivy(sample, 1, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
+                        activity = calculateSpecificAcitivy(sample, time, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
 
                         listActVal.push(activity.specificActivityVal);
                         listActUnc.push(activity.specificActivityUnc);

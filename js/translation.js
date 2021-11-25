@@ -30,7 +30,9 @@ var french = {
     "Sample files": "Fichiers d'échantillon",
     "Background file": "Fichier de bruit de fond",
     "Files Information:": "Renseignement sur les fichiers:",
-    "Calculate and plot": "Calcurer et tracer"
+    "Calculate and plot": "Calcurer et tracer",
+    "Measurement Time (in min):": "Temps de mésure (en min):",
+    "No measurement time was given": "Aucun temps de mésure était fourni",
 };
 
 var german = {
@@ -65,5 +67,7 @@ var german = {
     "Sample files": "Beispieldateien",
     "Background file": "Hintergrunddatei",
     "Files Information:": "Dateiinformationen:",
-    "Calculate and plot": "Berechen und zeichen"
+    "Calculate and plot": "Berechen und zeichen",
+    "Measurement Time (in min):": "Messzeit (in min):",
+    "No measurement time was given": "Keine Messzeit angegeben",
 }
