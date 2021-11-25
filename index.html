@@ -210,7 +210,7 @@ td, th {
                         <button type="button" id="calculate" class="btn btn-success"
                             data-translate="Calculate">Calculate</button>
                     </div>
-					<div class="offset-1 fileinput">
+					<div class="offset-1 fileinput" style="display:none">
                         <button type="button" id="calculate-plot" class="btn btn-success"
                             data-translate="Calculate and plot">Calculate and plot</button>
                     </div>
@@ -220,7 +220,7 @@ td, th {
                 </div>
                 <div class="col-12 form-group" id="result-tab" style="display:none">
                     <h6>&nbsp;</h6>
-                    <label for="result" data-translate="Files Information:">Files information:</label>
+                    <label class="fileinput" style="display:none" for="result" data-translate="Files Information:">Files information:</label>
                     <div id="extraResults"></div>
                     <label for="result"><br></br></label>
                     <label for="result" data-translate="Activity:">Activity:</label>
@@ -601,6 +601,10 @@ td, th {
                 var result = null;
 				var extraResults = [];
 
+                var listActVal = []
+                var listActUnc = []
+                var region = []
+
                 if (inputtype === 'manual') {
 
                     let flag = true;
@@ -626,9 +630,6 @@ td, th {
                     var bkgrndCCPM = parseFloat($('#bkgrndCCPM').val());
                     var sampleisotope = $('#sampleisotope').val();
 
-                    var listActVal = []
-                    var listActUnc = []
-                    var region = []
                     for (var i in tSIE) {
                         ACPMPE = ACPM[i] / 2000
                         BCPMPE = BCPM[i] / 18.6
@@ -725,11 +726,7 @@ td, th {
                     var bkgrndBCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/bkgrndTime;
                     var bkgrndCCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/bkgrndTime;
 					
-
-                    //filedata είναι array μέ τα data των αρχείων
                     var sampleisotope = $('#sampleisotope').val();
-                    var actspm = []
-                    var region = []
 					
                     for (var i in filedata) {
                         var eVar = filedata[i].data.indexOf("TSIE=");
@@ -752,7 +749,7 @@ td, th {
                         activity = calculateSpecificAcitivy(sample, time, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
 
                         console.log(activity)
-                        console.log(typeOf(activity.specificActivityVal))
+
                         listActVal.push(activity.specificActivityVal);
                         listActUnc.push(activity.specificActivityUnc);
                         region.push(factors.aRegion);
@@ -760,7 +757,6 @@ td, th {
                     }
 
                     mean = calculateMean(listActVal, listActUnc)
-
                     result = mean.meanValue + ' &pm; ' + mean.meanSigma;
 
                     extraResults.push([t('Background'), bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM])
