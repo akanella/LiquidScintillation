@@ -387,12 +387,14 @@ td, th {
                     var a3 = 0.
                     var a2 = 0.
                     var a1 = 0.
-                    var a0 = 50.
+                    var a0 = 0.5
                     CPM = ACPM
                     bkgrndCPM = bkgrndACPM
                 }
-                // console.log(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM)
-                // console.log(a6,a5,a4,a3,a2,a1,a0,CPM,bkgrndCPM,aRegion)
+
+                console.log(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM)
+                console.log(a6,a5,a4,a3,a2,a1,a0,CPM,bkgrndCPM,aRegion)
+
                 return {
                     a6,
                     a5,
@@ -409,9 +411,12 @@ td, th {
             }
 
             function calculateEfficiency(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE) {
-                // console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
+
                 var efficiency = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
                 var bkgrndEfficiency = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
+
+                console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
+                console.log(efficiency, bkgrndEfficiency)
 
                 return {
 
@@ -423,17 +428,20 @@ td, th {
             }
 
             function calculateSpecificAcitivy(sample, time, CPM, efficiency, bkgrndCPM, bkgrndEfficiency) {
-                // console.log(sample, CPM, efficiency, bkgrndCPM, bkgrndEfficiency)
-                var activityVal = ((CPM / 60) / (efficiency / 100)) / sample
-                var activityUnc = ((Math.pow(CPM*time,0.5) / (time*60)) / (efficiency / 100)) / sample
 
-                var bckgrndActivityVal = ((bkgrndCPM / 60) / (bkgrndEfficiency / 100))
-                var bckgrndActivityUnc = ((Math.pow(CPM*time,0.5) / (time*60)) / (bkgrndEfficiency / 100))
+                var activityVal = ((CPM / 60) / efficiency) / sample
+                var activityUnc = ((Math.pow(CPM*time,0.5) / (time*60)) / efficiency) / sample
+
+                var bckgrndActivityVal = ((bkgrndCPM / 60) / bkgrndEfficiency)
+                var bckgrndActivityUnc = ((Math.pow(CPM*time,0.5) / (time*60)) / bkgrndEfficiency)
 
                 var specificActivityVal = activityVal - bckgrndActivityVal
                 var aCalculation = Math.pow(activityUnc,2) + Math.pow(bckgrndActivityUnc,2)
                 var specificActivityUnc = Math.pow(aCalculation,0.5)
-                // console.log(specificActivityVal, specificActivityUnc)
+
+                console.log(sample, time, CPM, efficiency, bkgrndCPM, bkgrndEfficiency)
+                console.log(specificActivityVal, specificActivityUnc)
+
                 return {
 
                     specificActivityVal,
@@ -484,6 +492,9 @@ td, th {
                     var meanSigma = meanWeightSigma
 
                 }
+
+                console.log(valAr, uncAr)
+                console.log(meanValue, meanSigma)
 
                 return {
 
@@ -738,8 +749,10 @@ td, th {
 
                         efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE, bkgrndtSIE)
 
-                        activity = calculateSpecificAcitivy(sample, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
+                        activity = calculateSpecificAcitivy(sample, time, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
 
+                        console.log(activity)
+                        console.log(typeOf(activity.specificActivityVal))
                         listActVal.push(activity.specificActivityVal);
                         listActUnc.push(activity.specificActivityUnc);
                         region.push(factors.aRegion);
