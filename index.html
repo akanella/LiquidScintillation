@@ -402,8 +402,8 @@ td, th {
                     bkgrndCPM = bkgrndACPM
                 }
 
-                console.log(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM)
-                console.log(a6,a5,a4,a3,a2,a1,a0,CPM,bkgrndCPM,aRegion)
+                // console.log(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM)
+                // console.log(a6,a5,a4,a3,a2,a1,a0,CPM,bkgrndCPM,aRegion)
 
                 return {
                     a6,
@@ -425,8 +425,8 @@ td, th {
                 var efficiency = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
                 var bkgrndEfficiency = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)
 
-                console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
-                console.log(efficiency, bkgrndEfficiency)
+                // console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
+                // console.log(efficiency, bkgrndEfficiency)
 
                 return {
 
@@ -449,8 +449,8 @@ td, th {
                 var aCalculation = Math.pow(activityUnc,2) + Math.pow(bckgrndActivityUnc,2)
                 var specificActivityUnc = Math.pow(aCalculation,0.5)
 
-                console.log(sample, time, CPM, efficiency, bkgrndCPM, bkgrndEfficiency)
-                console.log(specificActivityVal, specificActivityUnc)
+                // console.log(sample, time, CPM, efficiency, bkgrndCPM, bkgrndEfficiency)
+                // console.log(specificActivityVal, specificActivityUnc)
 
                 return {
 
@@ -503,8 +503,14 @@ td, th {
 
                 }
 
-                console.log(valAr, uncAr)
-                console.log(meanValue, meanSigma)
+                if (meanValue < 0.) {
+
+                    meanValue = 0.
+
+                }
+
+                // console.log(valAr, uncAr)
+                // console.log(meanValue, meanSigma)
 
                 return {
 
@@ -765,8 +771,6 @@ td, th {
                         efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE, bkgrndtSIE)
 
                         activity = calculateSpecificAcitivy(sample, time, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
-
-                        console.log(activity)
 
                         listActVal.push(activity.specificActivityVal);
                         listActUnc.push(activity.specificActivityUnc);
