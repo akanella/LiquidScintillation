@@ -76,6 +76,14 @@ td, th {
                         </select>
                     </div>
                 </div>
+				<div class="form-group col row manualinput" style="display:none">
+                    <div class="form-group col">
+                        <span data-translate="kati:">kati:</span>
+                    </div>
+                    <div class="form-group col">
+                        <input type="number" id="kati" class="form-control" required>
+                    </div>
+                </div>
             </div>
 
             <div class="col-6 offset-2" id="input-buttons" style="margin-top:50px">
@@ -345,6 +353,8 @@ td, th {
                         $(this).html(translation);
                     }
                 })
+				$('.translatable').hide();
+				$('.translatable translate-'+lang).show();
             }
 
             function efficiencyFactors(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM) {
@@ -602,6 +612,12 @@ td, th {
 				var extraResults = [];
 
                 if (inputtype === 'manual') {
+				
+					if (!$('#kati').val()) {
+						$('#kati').addClass('is-invalid');
+						alert(t('No kati quantity'));
+						return false;
+					}
 
                     let flag = true;
                     $('#manualinput-tab .required').each(function () {
