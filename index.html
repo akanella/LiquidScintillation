@@ -374,7 +374,7 @@ td, th {
                     var aRegion = 'C'
                     var a6 = 0.
                     var a5 = 0.
-                    if (tSIE[i] < 300.) {
+                    if (tSIE < 300.) {
                         var a4 = -3.26700E-10
                         var a3 = 2.81653E-07
                         var a2 = -9.19133E-05
@@ -415,7 +415,8 @@ td, th {
                     a0,
                     CPM,
                     bkgrndCPM,
-                    aRegion
+                    aRegion,
+                    sampleIsotope
                 };
 
             }
@@ -787,6 +788,18 @@ td, th {
 						createChart(Array.from(Array(4000).keys()).map(x=>x/2),datasets);
 					}
 					
+                    if (region.every((val, i, arr) => val === arr[0])) {
+                        if (region[0] == 'A') {
+                            var isotope = t(' of an unknown isotope (upper limit)')
+                        } else if (region[0] == 'B') {
+                            var isotope = t(' of <sup>3</sup>H')
+                        } else if (region[0] == 'C') {
+                            var isotope = t(' of <sup>14</sup>C')
+                        }
+                    } else {
+                        alert('Wat?')
+                    }
+
                 } else {
                     alert('Wat?');
                 }
