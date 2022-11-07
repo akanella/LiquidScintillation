@@ -751,6 +751,8 @@ td, th {
                     var bkgrndBCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 40).reduce((a, b) => a + b, 0)/bkgrndTime;
                     var bkgrndCCPM = bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 360).reduce((a, b) => a + b, 0)/bkgrndTime;
 					
+                    datasets.push({label: t('Background'), data: bkgrndcts.split(/\r\n|\r|\n/).map(x=>+x).slice(0, 4000)})
+
                     var sampleisotope = $('#sampleisotope').val();
 					
                     for (var i in filedata) {
