@@ -33,6 +33,7 @@ var french = {
     "Calculate and plot": "Calcurer et tracer",
     "Measurement Time (in min):": "Temps de mésure (en min):",
     "No measurement time was given": "Aucun temps de mésure était fourni",
+    "Ignore photoluminescence": "Ignorer la photoluminescence",
 };
 
 var german = {
@@ -70,4 +71,5 @@ var german = {
     "Calculate and plot": "Berechen und zeichen",
     "Measurement Time (in min):": "Messzeit (in min):",
     "No measurement time was given": "Keine Messzeit angegeben",
+    "Ignore photoluminescence": "Photolumineszenz ignorieren",
 }

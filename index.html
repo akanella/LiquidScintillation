@@ -32,7 +32,7 @@ td, th {
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 4.1</span>
+            <span>v. 4.2</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -108,8 +108,8 @@ td, th {
                     </div>
                     <div class="col-12 row">
 						<div class="col-6 form-check text-left">
-							<input type="checkbox" class="form-check-input" id="photoLuminescence">
-							<label class="form-check-label" for="photoLuminescence" data-translate="Photo Luminescence">Photo Luminescence</label>
+							<input type="checkbox" class="form-check-input" id="photoluminescence">
+							<label class="form-check-label" for="photoluminescence" data-translate="Ignore photoluminescence">Ignore photoluminescence</label>
 						</div>
 						<div class="col-6 text-right">
 							<small class="form-text text-muted" data-translate="Last efficiency calibaration:">Last efficiency calibaration:</small><small class="form-text text-muted"> 07.2021</small>
@@ -788,7 +788,7 @@ td, th {
 
                     var sampleIsotope = $('#sampleisotope').val();
 					
-					var photoLuminescence = $('#photoLuminescence').prop('checked');
+					var photoluminescence = $('#photoluminescence').prop('checked');
 					
                     for (var i in filedata) {
                         var eVar = filedata[i].data.indexOf("TSIE=");
@@ -798,9 +798,12 @@ td, th {
                         var time = parseFloat(filedata[i].data.slice(fVar+6, eVar-1));
                         var tSIE = parseFloat(filedata[i].data.slice(eVar+5, eVar+11));
                         var cts = filedata[i].data.slice(gVar+8, hVar-4).split(/\r\n|\r|\n/).map(x=>+x);
-						if(photoLuminescence){
+                        // console.log(cts)
+						if(photoluminescence){
 							cts[0] = cts[1] = cts[2] = cts[3] = cts[4] = 0;
 						}
+                        // console.log(photoluminescence)
+                        // console.log(cts)
                         var ACPM = cts.slice(0, 4000).reduce((a, b) => a + b, 0)/time;
                         var BCPM = cts.slice(0, 40).reduce((a, b) => a + b, 0)/time;
                         var CCPM = cts.slice(0, 360).reduce((a, b) => a + b, 0)/time;
