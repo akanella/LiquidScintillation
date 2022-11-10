@@ -32,7 +32,7 @@ td, th {
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 4.2</span>
+            <span>v. 4.3</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -452,11 +452,11 @@ td, th {
 
                 if (sampleIsotope == "strontium") {
 
-                    var efficiency = 0.5 * ((a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)) + 0.5 * ((b6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (b5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (b4 * tSIE * tSIE * tSIE * tSIE) + (b3 * tSIE * tSIE * tSIE) + (b2 * tSIE * tSIE) + (b1 * tSIE) + (b0))
-                    var bkgrndEfficiency = 0.5 * ((a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0)) + 0.5 * ((b6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (b5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (b4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (b3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (b2 * bkgrndtSIE * bkgrndtSIE) + (b1 * bkgrndtSIE) + (b0))
+                    var efficiency = 0.5 * ((a6 * Math.pow(tSIE,6)) + (a5 * Math.pow(tSIE,5)) + (a4 * Math.pow(tSIE,4)) + (a3 * Math.pow(tSIE,3)) + (a2 * Math.pow(tSIE,2)) + (a1 * tSIE) + a0) + 0.5 * ((b6 * Math.pow(tSIE,6)) + (b5 * Math.pow(tSIE,5)) + (b4 * Math.pow(tSIE,4)) + (b3 * Math.pow(tSIE,3)) + (b2 * Math.pow(tSIE,2)) + (b1 * tSIE) + b0)
+                    var bkgrndEfficiency = 0.5 * ((a6 * Math.pow(bkgrndtSIE,6)) + (a5 * Math.pow(bkgrndtSIE,5)) + (a4 * Math.pow(bkgrndtSIE,4)) + (a3 * Math.pow(bkgrndtSIE,3)) + (a2 * Math.pow(bkgrndtSIE,2)) + (a1 * bkgrndtSIE) + a0) + 0.5 * ((b6 * Math.pow(bkgrndtSIE,6)) + (b5 * Math.pow(bkgrndtSIE,5)) + (b4 * Math.pow(bkgrndtSIE,4)) + (b3 * Math.pow(bkgrndtSIE,3)) + (b2 * Math.pow(bkgrndtSIE,2)) + (b1 * bkgrndtSIE) + b0)
                 } else {
-                    var efficiency = (a6 * tSIE * tSIE * tSIE * tSIE * tSIE * tSIE) + (a5 * tSIE * tSIE * tSIE * tSIE * tSIE) + (a4 * tSIE * tSIE * tSIE * tSIE) + (a3 * tSIE * tSIE * tSIE) + (a2 * tSIE * tSIE) + (a1 * tSIE) + (a0)
-                    var bkgrndEfficiency = (a6 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a5 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a4 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a3 * bkgrndtSIE * bkgrndtSIE * bkgrndtSIE) + (a2 * bkgrndtSIE * bkgrndtSIE) + (a1 * bkgrndtSIE) + (a0) 
+                    var efficiency = (a6 * Math.pow(tSIE,6)) + (a5 * Math.pow(tSIE,5)) + (a4 * Math.pow(tSIE,4)) + (a3 * Math.pow(tSIE,3)) + (a2 * Math.pow(tSIE,2)) + (a1 * tSIE) + a0
+                    var bkgrndEfficiency = (a6 * Math.pow(bkgrndtSIE,6)) + (a5 * Math.pow(bkgrndtSIE,5)) + (a4 * Math.pow(bkgrndtSIE,4)) + (a3 * Math.pow(bkgrndtSIE,3)) + (a2 * Math.pow(bkgrndtSIE,2)) + (a1 * bkgrndtSIE) + a0 
                 }
 
                 // console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
