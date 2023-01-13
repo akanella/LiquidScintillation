@@ -32,7 +32,7 @@ td, th {
     <div class="row col-12" style="margin-bottom:30px">
         <div class="col-10">
             <b data-translate="Liquid Scintillation Activity Calculator">Liquid Scintillation Activity Calculator</b>
-            <span>v. 4.3</span>
+            <span>v. 5.1</span>
         </div>
         <div class="col-2">
             <span style="cursor:pointer" class="languages" data-lang="eng"> en </span>
@@ -72,6 +72,7 @@ td, th {
                             <!-- <option value="auto">Auto</option> -->
                             <option value="tritium">H-3</option>
                             <option value="carbon">C-14</option>
+                            <option value="strontium_equi">Sr-90 (Equi.)</option>
                             <option value="strontium">Sr-90</option>
                             <option value="other" data-translate="Unknown">Unknown</option>
                         </select>
@@ -369,6 +370,13 @@ td, th {
                 // if ((sampleIsotope == "tritium") || (sampleIsotope == "auto"  && 1.2 * BCPM > CCPM && 1.2 * CCPM > ACPM)) {
                 if (sampleIsotope == "tritium") {
                     // var aRegion = 'B'
+                    var b6 = 0.
+                    var b5 = 0.
+                    var b4 = 0.
+                    var b3 = 0.
+                    var b2 = 0.
+                    var b1 = 0.
+                    var b0 = 0.
                     var a6 = 6.94787E-18
                     var a5 = -2.43194E-14
                     var a4 = 3.30243E-11
@@ -381,6 +389,13 @@ td, th {
                 // } else if ((sampleIsotope == "carbon") || (sampleIsotope == "auto"  && CCPM > BCPM && 1.2 * CCPM > ACPM)) {
                 } else if (sampleIsotope == "carbon") {
                     // var aRegion = 'C'
+                    var b6 = 0.
+                    var b5 = 0.
+                    var b4 = 0.
+                    var b3 = 0.
+                    var b2 = 0.
+                    var b1 = 0.
+                    var b0 = 0.
                     var a6 = 0.
                     var a5 = 0.
                     if (tSIE < 300.) {
@@ -398,7 +413,7 @@ td, th {
                     }
                     CPM = CCPM
                     bkgrndCPM = bkgrndCCPM
-                } else if (sampleIsotope == "strontium") {
+                } else if (sampleIsotope == "strontium_equi") {
                     // var aRegion = 'A'
                     var a6 = 0.
                     var a5 = 0.
@@ -416,8 +431,33 @@ td, th {
                     var b0 = 9.9740E-1
                     CPM = ACPM
                     bkgrndCPM = bkgrndACPM 
+                } else if (sampleIsotope == "strontium") {
+                    // var aRegion = 'A'
+                    var b6 = 0.
+                    var b5 = 0.
+                    var b4 = 0.
+                    var b3 = 0.
+                    var b2 = 0.
+                    var b1 = 0.
+                    var b0 = 0.
+                    var a6 = 0.
+                    var a5 = 0.
+                    var a4 = -9.9675E-13
+                    var a3 = 2.0351E-9
+                    var a2 = -1.5664E-6
+                    var a1 = 5.6472E-4
+                    var a0 = 9.0038E-1
+                    CPM = ACPM
+                    bkgrndCPM = bkgrndACPM 
                 } else {
                     // var aRegion = 'A'
+                    var b6 = 0.
+                    var b5 = 0.
+                    var b4 = 0.
+                    var b3 = 0.
+                    var b2 = 0.
+                    var b1 = 0.
+                    var b0 = 0.
                     var a6 = 0.
                     var a5 = 0.
                     var a4 = 0.
@@ -433,24 +473,17 @@ td, th {
                 // console.log(a6,a5,a4,a3,a2,a1,a0,CPM,bkgrndCPM,aRegion)
 
                 return {
-                    a6,
-                    a5,
-                    a4,
-                    a3,
-                    a2,
-                    a1,
-                    a0,
-                    CPM,
-                    bkgrndCPM,
-                    // aRegion,
+                    b6, b5, b4, b3, b2, b1, b0,    
+                    a6, a5, a4, a3, a2, a1, a0,
+                    CPM, bkgrndCPM,
                     sampleIsotope
                 };
 
             }
 
-            function calculateEfficiency(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE, sampleIsotope) {
+            function calculateEfficiency(a6, a5, a4, a3, a2, a1, a0, b6, b5, b4, b3, b2, b1, b0, tSIE, bkgrndtSIE, sampleIsotope) {
 
-                if (sampleIsotope == "strontium") {
+                if (sampleIsotope == "strontium_equi") {
 
                     var efficiency = 0.5 * ((a6 * Math.pow(tSIE,6)) + (a5 * Math.pow(tSIE,5)) + (a4 * Math.pow(tSIE,4)) + (a3 * Math.pow(tSIE,3)) + (a2 * Math.pow(tSIE,2)) + (a1 * tSIE) + a0) + 0.5 * ((b6 * Math.pow(tSIE,6)) + (b5 * Math.pow(tSIE,5)) + (b4 * Math.pow(tSIE,4)) + (b3 * Math.pow(tSIE,3)) + (b2 * Math.pow(tSIE,2)) + (b1 * tSIE) + b0)
                     var bkgrndEfficiency = 0.5 * ((a6 * Math.pow(bkgrndtSIE,6)) + (a5 * Math.pow(bkgrndtSIE,5)) + (a4 * Math.pow(bkgrndtSIE,4)) + (a3 * Math.pow(bkgrndtSIE,3)) + (a2 * Math.pow(bkgrndtSIE,2)) + (a1 * bkgrndtSIE) + a0) + 0.5 * ((b6 * Math.pow(bkgrndtSIE,6)) + (b5 * Math.pow(bkgrndtSIE,5)) + (b4 * Math.pow(bkgrndtSIE,4)) + (b3 * Math.pow(bkgrndtSIE,3)) + (b2 * Math.pow(bkgrndtSIE,2)) + (b1 * bkgrndtSIE) + b0)
@@ -460,7 +493,10 @@ td, th {
                 }
 
                 // console.log(a6, a5, a4, a3, a2, a1, a0, tSIE, bkgrndtSIE)
+                // console.log(a6, a5, a4, a3, a2, a1, a0)
+                // console.log(b6, b5, b4, b3, b2, b1, b0)
                 // console.log(efficiency, bkgrndEfficiency)
+                // console.log(sampleIsotope)
 
                 return {
 
@@ -695,7 +731,7 @@ td, th {
 
                         factors = efficiencyFactors(sampleIsotope, tSIE[i], ACPM[i], BCPM[i], CCPM[i], bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
-                        efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE[i], bkgrndtSIE)
+                        efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, factors.b6, factors.b5, factors.b4, factors.b3, factors.b2, factors.b1, factors.b0, tSIE[i], bkgrndtSIE, factors.sampleIsotope)
 
                         activity = calculateSpecificAcitivy(sample, time, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
 
@@ -711,6 +747,8 @@ td, th {
                         var isotope = t(' of <sup>14</sup>C')
                     } else if (sampleIsotope == 'strontium') {
                         var isotope = t(' of <sup>90</sup>Sr')
+                    } else if (sampleIsotope == 'strontium_equi') {
+                        var isotope = t(' of <sup>90</sup>Sr in secular equilibrium with <sup>90</sup>Y')
                     } else if (sampleIsotope == 'other') {
                         var isotope = t(' of an unknown isotope (upper limit)')
                     } else {
@@ -812,7 +850,7 @@ td, th {
 
                         factors = efficiencyFactors(sampleIsotope, tSIE, ACPM, BCPM, CCPM, bkgrndtSIE, bkgrndACPM, bkgrndBCPM, bkgrndCCPM);
 
-                        efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, tSIE, bkgrndtSIE)
+                        efficiencies = calculateEfficiency(factors.a6, factors.a5, factors.a4, factors.a3, factors.a2, factors.a1, factors.a0, factors.b6, factors.b5, factors.b4, factors.b3, factors.b2, factors.b1, factors.b0, tSIE, bkgrndtSIE, factors.sampleIsotope)
 
                         activity = calculateSpecificAcitivy(sample, time, factors.CPM, efficiencies.efficiency, factors.bkgrndCPM, efficiencies.bkgrndEfficiency)
                         // console.log(efficiencies)
@@ -839,6 +877,8 @@ td, th {
                         var isotope = t(' of <sup>14</sup>C')
                     } else if (sampleIsotope == 'strontium') {
                         var isotope = t(' of <sup>90</sup>Sr')
+                    } else if (sampleIsotope == 'strontium_equi') {
+                        var isotope = t(' of <sup>90</sup>Sr in secular equilibrium')
                     } else if (sampleIsotope == 'other') {
                         var isotope = t(' of an unknown isotope (upper limit)')
                     } else {
