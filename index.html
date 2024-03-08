@@ -250,6 +250,8 @@ td, th {
 						data-translate="Region B (E < 18.6 keV)">Region B (E < 18.6 keV)</button>
 						<button type="button" class="btn btn-info change-range" data-range="320"
 						data-translate="Region C (E < 156.5 keV)">Region C (E < 156.5 keV)</button>
+						<button type="button" id="download-graph" class="btn btn-warning float-right"
+						data-translate="Download">Download</button>
 					</div>
                 </div>
             </div>
@@ -273,6 +275,20 @@ td, th {
     </div>
     <script>
         $(document).ready(function () {
+			function download(data, filename){
+				var link = document.createElement("a");
+				link.setAttribute("href", data);
+				link.setAttribute("download", filename);
+				document.body.appendChild(link); // Required for FF
+				link.click();
+				link.remove();
+			}
+			
+			$('#download-graph').on('click', function(){
+				var ctx = $('#result-graph')[0];
+				download(ctx.toDataURL(),'graph.png')
+			})
+			
             var lang = 'eng'; var myChart = null;
 			
             function t(value) {
