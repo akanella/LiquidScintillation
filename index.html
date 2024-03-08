@@ -331,6 +331,24 @@ td, th {
 							backgroundColor: randomColor+"80"
 						};
 					});
+					const plugin = {
+					  id: 'background',
+					  beforeDraw: (chart, args, opts) => {
+						if (!opts.color) {
+						  return;
+						}
+
+						const {
+						  ctx,
+						  chartArea
+						} = chart;
+
+						ctx.fillStyle = opts.color;
+						ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height)
+					  }
+					}
+					Chart.register(plugin);
+					
 					myChart = new Chart(ctx, {
 						type: 'line',
 						responsive: true,
@@ -348,6 +366,11 @@ td, th {
 						  }
 						},
 						options: {
+							plugins: {
+							  background: {
+								color: 'white'
+							  }
+							},
 							scales: {
 								y: {
 									beginAtZero: true,
