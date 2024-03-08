@@ -344,7 +344,8 @@ td, th {
 						} = chart;
 
 						ctx.fillStyle = opts.color;
-						ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height)
+						//ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height)
+						ctx.fillRect(0, 0, chartArea.width+100, chartArea.height+150)
 					  }
 					}
 					Chart.register(plugin);
